@@ -24,7 +24,8 @@ import project.pipepipe.extractor.services.niconico.extractor.NicoNicoTrendingEx
 import project.pipepipe.extractor.utils.RequestHelper.getQueryValue
 
 object NicoNicoUrlRouter {
-    fun route(url: String): Extractor<*,*>? {
+    fun route(rawUrl: String): Extractor<*,*>? {
+        val url = rawUrl.replace("sp.nicovideo.jp", "www.nicovideo.jp")
         return when {
             parseStreamId(url) != null -> NicoNicoStreamExtractor(url)
             url.contains(SEARCH_URL) -> NicoNicoSearchExtractor(url)
