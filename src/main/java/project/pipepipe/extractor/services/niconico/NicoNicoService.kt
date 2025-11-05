@@ -28,9 +28,12 @@ class NicoNicoService(id: String): StreamingService(id)  {
             "X-Frontend-Version" to "0",
         )
         fun isChannel(watchData: JsonNode): Boolean {
-            return watchData.at("/data/response/owner/channel").asText().let {
-                !it.isNullOrEmpty() && it != "null"
+            val owner = watchData.at("/data/response/owner")
+            if (owner.isNull) {
+                return true
             }
+            val channel = watchData.at("/data/response/channel")
+            return !channel.isNull && !channel.isMissingNode
         }
         const val TRENDING_RSS_STR: String = "^第\\d+位：(.*)$"
         const val SMILEVIDEO: String = "(nicovideo\\.jp\\/watch|nico\\.ms)\\/(.+)?"

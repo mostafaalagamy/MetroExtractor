@@ -1,6 +1,7 @@
 package project.pipepipe.extractor.services.niconico
 
 import project.pipepipe.extractor.Extractor
+import project.pipepipe.extractor.services.niconico.NicoNicoLinks.CHANNEL_URL
 import project.pipepipe.extractor.services.niconico.NicoNicoLinks.PLAYLIST_SEARCH_API_URL
 import project.pipepipe.extractor.services.niconico.NicoNicoLinks.RELATED_VIDEO_URL
 import project.pipepipe.extractor.services.niconico.NicoNicoLinks.SEARCH_URL
@@ -38,6 +39,7 @@ object NicoNicoUrlRouter {
             url.contains("/mylist/") -> NicoNicoPlaylistExtractor(url)
             url.contains("/series/") -> NicoNicoSeriesExtractor(url)
             url.contains(USER_URL) -> NicoNicoChannelMainTabExtractor(url)
+            url.contains(CHANNEL_URL) -> NicoNicoChannelMainTabExtractor(url)
             url.contains(RELATED_VIDEO_URL) -> NicoNicoRelatedVideoExtractor(url)
             url.contains(TRENDING_RAW_URL) -> NicoNicoTrendingExtractor(url)
             else -> null
