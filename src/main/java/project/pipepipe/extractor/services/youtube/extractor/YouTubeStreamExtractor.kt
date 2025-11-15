@@ -34,6 +34,7 @@ import project.pipepipe.shared.state.PlainState
 import project.pipepipe.extractor.ExtractorContext.asJson
 import project.pipepipe.extractor.utils.mixedNumberWordToLong
 import project.pipepipe.shared.utils.json.requireArray
+import project.pipepipe.shared.utils.json.requireBoolean
 import project.pipepipe.shared.utils.json.requireInt
 import project.pipepipe.shared.utils.json.requireLong
 import project.pipepipe.shared.utils.json.requireObject
@@ -255,6 +256,7 @@ class YouTubeStreamExtractor(
                                     )
                                 }, playData.requireArray("/playerResponse/streamingData/adaptiveFormats")
                                 .filter { it.requireString("mimeType").startsWith("audio") }
+                                .filter { !runCatching{ it.requireBoolean("isDrc") }.getOrDefault(false) }
                                 .map {
                                     val hasMultiTracks = it.has("audioTrack")
                                     AudioStream(
@@ -262,7 +264,7 @@ class YouTubeStreamExtractor(
                                         it.requireString("url"),
                                         parseMediaType(it.requireString("mimeType")).first,
                                         parseMediaType(it.requireString("mimeType")).second!!,
-                                        it.requireLong("bitrate"),
+                                        it.requireLong("averageBitrate"),
                                         "${it.requireInt("/indexRange/start")}-${it.requireInt("/indexRange/end")}",
                                         "${it.requireInt("/initRange/start")}-${it.requireInt("/initRange/end")}",
                                         if (hasMultiTracks) it.requireString("audioSampleRate") else null,
