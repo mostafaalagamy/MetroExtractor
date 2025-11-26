@@ -252,7 +252,8 @@ class YouTubeStreamExtractor(
                                         it.requireInt("height"),
                                         it.requireInt("fps").toString(),
                                         "${it.requireInt("/indexRange/start")}-${it.requireInt("/indexRange/end")}",
-                                        "${it.requireInt("/initRange/start")}-${it.requireInt("/initRange/end")}"
+                                        "${it.requireInt("/initRange/start")}-${it.requireInt("/initRange/end")}",
+                                        runCatching { it.requireString("qualityLabel").contains("HDR", ignoreCase = true) }.getOrDefault(false)
                                     )
                                 }, playData.requireArray("/playerResponse/streamingData/adaptiveFormats")
                                 .filter { it.requireString("mimeType").startsWith("audio") }

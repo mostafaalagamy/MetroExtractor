@@ -36,12 +36,21 @@ fun createMultiStreamDashManifest(
 
     val videoAdaptationSets = videoStreams.groupBy { it.mimeType }.map { (mimeType, streams) ->
         val representations = streams.joinToString("\n") { video ->
+            // Add HDR color info to each representation
+            val supplementalProperty = if (video.isHdr) {
+                """
+                  <SupplementalProperty schemeIdUri="urn:mpeg:mpegB:cicp:ColourPrimaries" value="9"/>
+                  <SupplementalProperty schemeIdUri="urn:mpeg:mpegB:cicp:TransferCharacteristics" value="16"/>
+                  <SupplementalProperty schemeIdUri="urn:mpeg:mpegB:cicp:MatrixCoefficients" value="9"/>
+                """.trimIndent()
+            } else ""
+
             """
                 <Representation id="${video.id}" codecs="${video.codec}" width="${video.width}" height="${video.height}" bandwidth="${video.bandwidth}" frameRate="${video.frameRate}">
                   <BaseURL>${video.url.encodeUrl()}</BaseURL>
                   <SegmentBase indexRange="${video.indexRange}">
                     <Initialization range="${video.initialization}"/>
-                  </SegmentBase>
+                  </SegmentBase>$supplementalProperty
                 </Representation>
             """.trimIndent()
         }
