@@ -270,6 +270,7 @@ class YouTubeStreamExtractor(
                                         "${it.requireInt("/initRange/start")}-${it.requireInt("/initRange/end")}",
                                         if (hasMultiTracks) it.requireString("audioSampleRate") else null,
                                         if (hasMultiTracks) it.requireString("/audioTrack/id").substringBefore("-") else null,
+                                        if (hasMultiTracks) it.requireString("/audioTrack/displayName").contains("original", true) else false,
                                     )
                                 }, playData.at("/playerResponse/captions/playerCaptionsTracklistRenderer/captionTracks")
                                 .map {

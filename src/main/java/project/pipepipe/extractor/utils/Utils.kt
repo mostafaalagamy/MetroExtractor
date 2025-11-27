@@ -66,7 +66,12 @@ fun createMultiStreamDashManifest(
         .groupBy { it.mimeType to it.language }  // Group by both mimeType and language
         .map { (mimeTypeAndLang, streams) ->
             val (mimeType, language) = mimeTypeAndLang
+            val isDefaultGroup = streams.any { it.isDefault }
             val langAttr = if (!language.isNullOrEmpty()) """ lang="$language"""" else ""
+            val roleTag = if (isDefaultGroup) {
+                """<Role schemeIdUri="urn:mpeg:dash:role:2011" value="main" />"""
+            } else ""
+            val selectionAttr = if (isDefaultGroup) """ selectionFlags="1"""" else ""
 
             val representations = streams.joinToString("\n") { audio ->
                 val samplingRate = if (!audio.samplingRate.isNullOrEmpty()) """ audioSamplingRate="${audio.samplingRate}"""" else ""
@@ -81,7 +86,8 @@ fun createMultiStreamDashManifest(
             }
 
             """
-                <AdaptationSet contentType="audio" mimeType="$mimeType"$langAttr subsegmentAlignment="true">
+                <AdaptationSet contentType="audio" mimeType="$mimeType"$langAttr$selectionAttr subsegmentAlignment="true">
+                  $roleTag
                   $representations
                 </AdaptationSet>
             """.trimIndent()
