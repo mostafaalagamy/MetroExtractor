@@ -67,10 +67,11 @@ class YouTubeSearchExtractor(url: String): SearchExtractor(url) {
                     commit { YouTubeChannelInfoDataParser.parseFromChannelRenderer(it) }
                 }
             }
-
-            val continuation = data.first {it.has("continuationItemRenderer")}.requireString("/continuationItemRenderer/continuationEndpoint/continuationCommand/token")
+            var nextPageUrl: String? = null
+            val continuationItemRenderer = data.firstOrNull {it.has("continuationItemRenderer")}
+            continuationItemRenderer?.let { nextPageUrl = "$SEARCH_RAW_URL?continuation=${it.requireString("/continuationItemRenderer/continuationEndpoint/continuationCommand/token")}&type=${getQueryValue(url, "type")}"}
             return JobStepResult.CompleteWith(ExtractResult(errors = errors, pagedData = PagedData(
-                itemList, "$SEARCH_RAW_URL?continuation=$continuation&type=${getQueryValue(url, "type")}"
+                itemList, nextPageUrl
             )))
         }
     }
