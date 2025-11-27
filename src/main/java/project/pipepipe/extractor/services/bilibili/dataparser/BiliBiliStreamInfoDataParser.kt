@@ -49,7 +49,7 @@ object BiliBiliStreamInfoDataParser {
             uploaderName = item.requireObject("owner").requireString("name"),
             uploaderUrl = CHANNEL_BASE_URL + item.requireString("/owner/mid"),
             uploaderAvatarUrl = item.requireObject("owner").requireString("face"),
-            uploadDate = item.requireLong("pubdate"),
+            uploadDate = item.requireLong("pubdate") * 1000,
             headers = hashMapOf("Referer" to "https://www.bilibili.com")
         )
     }
