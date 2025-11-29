@@ -20,7 +20,8 @@ import project.pipepipe.extractor.services.youtube.extractor.YouTubeTrendingExtr
 import project.pipepipe.extractor.utils.RequestHelper.getQueryValue
 
 object YouTubeUrlRouter {
-    fun route(url: String): Extractor<*,*>? {
+    fun route(rawUrl: String): Extractor<*,*>? {
+        val url = rawUrl.replace("://youtube.com", "://www.youtube.com").replace("://m.youtube.com", "://www.youtube.com")
         return when {
             url.contains(TRENDING_RAW_URL) -> YouTubeTrendingExtractor(url)
             url.contains(PLAYLIST_BASE_URL) -> YouTubePlaylistExtractor(url)
