@@ -2,7 +2,6 @@ package project.pipepipe.extractor.services.youtube
 
 import project.pipepipe.extractor.ExtractorContext.objectMapper
 import project.pipepipe.extractor.utils.generateRandomString
-import project.pipepipe.shared.infoitem.ChannelTabInfo
 import project.pipepipe.shared.infoitem.ChannelTabType
 
 object YouTubeRequestHelper {
@@ -39,6 +38,16 @@ object YouTubeRequestHelper {
             "lockedSafetyMode" to false
         )
     )
+
+    val ChannelTabType.browseId: String
+        get() = when(this) {
+            ChannelTabType.VIDEOS -> "EgZ2aWRlb3PyBgQKAjoA"
+            ChannelTabType.SHORTS -> "EgZzaG9ydHPyBgUKA5oBAA%3D%3D"
+            ChannelTabType.LIVE -> "EgdzdHJlYW1z8gYECgJ6AA%3D%3D"
+            ChannelTabType.ALBUMS -> "EghyZWxlYXNlc_IGBQoDsgEA"
+            ChannelTabType.PLAYLISTS -> "EglwbGF5bGlzdHPyBgQKAkIA"
+            else -> throw IllegalArgumentException()
+        }
 
     fun getAndroidFetchStreamBody(id: String): String {
         val bodyMap = mapOf(
@@ -90,7 +99,7 @@ object YouTubeRequestHelper {
             "params" to when(type) {
                 ChannelTabType.VIDEOS -> "EgZ2aWRlb3PyBgQKAjoA"
                 ChannelTabType.SHORTS -> "EgZzaG9ydHPyBgUKA5oBAA%3D%3D"
-                ChannelTabType.LIVES -> "EgdzdHJlYW1z8gYECgJ6AA%3D%3D"
+                ChannelTabType.LIVE -> "EgdzdHJlYW1z8gYECgJ6AA%3D%3D"
                 ChannelTabType.ALBUMS -> "EghyZWxlYXNlc_IGBQoDsgEA"
                 ChannelTabType.PLAYLISTS -> "EglwbGF5bGlzdHPyBgQKAkIA"
                 else -> throw IllegalArgumentException()

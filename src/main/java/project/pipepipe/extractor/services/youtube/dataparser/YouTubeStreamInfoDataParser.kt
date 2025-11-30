@@ -3,6 +3,7 @@ package project.pipepipe.extractor.services.youtube.dataparser
 import com.fasterxml.jackson.databind.JsonNode
 import project.pipepipe.extractor.IgnoreException
 import project.pipepipe.extractor.services.youtube.YouTubeLinks.CHANNEL_URL
+import project.pipepipe.extractor.services.youtube.YouTubeLinks.SHORTS_URL
 import project.pipepipe.extractor.services.youtube.YouTubeLinks.STREAM_URL
 import project.pipepipe.extractor.utils.TimeAgoParser
 import project.pipepipe.extractor.utils.extractDigitsAsLong
@@ -164,6 +165,21 @@ object YouTubeStreamInfoDataParser {
                 uploadDate?.let { this.uploadDate = it }
             }
         }
+    }
+
+    fun parseFromShortsLockupViewModel(data: JsonNode, overrideChannelName: String, overrideChannelId: String): StreamInfo {
+        return StreamInfo(
+            url = SHORTS_URL + data.requireString("/shortsLockupViewModel/onTap/innertubeCommand/reelWatchEndpoint/videoId"),
+            serviceId = "YOUTUBE",
+            name = data.requireString("/shortsLockupViewModel/overlayMetadata/primaryText/content"),
+            uploaderName = overrideChannelName,
+            uploaderUrl = CHANNEL_URL + overrideChannelId,
+            thumbnailUrl = data.requireArray("/shortsLockupViewModel/onTap/innertubeCommand/reelWatchEndpoint/thumbnail/thumbnails").last().requireString("url"),
+            isPaid = false, // todo: there do exist paid shorts but I have no data point
+            streamType = StreamType.VIDEO_STREAM,
+            isShort = true,
+            viewCount = runCatching { data.requireString("/shortsLockupViewModel/overlayMetadata/secondaryText/content").extractDigitsAsLong() }.getOrNull()
+        )
     }
 
 

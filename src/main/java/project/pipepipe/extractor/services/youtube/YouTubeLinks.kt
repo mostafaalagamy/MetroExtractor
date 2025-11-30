@@ -16,6 +16,7 @@ object YouTubeLinks {
     const val STREAM_URL = "https://www.youtube.com/watch?v="
     const val BASE_URL = "https://www.youtube.com"
     const val CHANNEL_URL = "https://www.youtube.com/channel/"
+    const val SHORTS_URL = "https://www.youtube.com/shorts/"
     const val PLAYLIST_BASE_URL = "https://www.youtube.com/playlist?list="
     const val BROWSE_URL = "https://www.youtube.com/youtubei/v1/browse?prettyPrint=false"
     const val RESOLVE_CHANNEL_ID_URL = "https://www.youtube.com/youtubei/v1/navigation/resolve_url?prettyPrint=false"

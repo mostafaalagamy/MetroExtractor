@@ -103,11 +103,16 @@ class YouTubeChannelMainTabExtractor(
                              nextPageUrl = "$TAB_RAW_URL?id=$id&type=videos&continuation=$it&name=$nameEncoded"
                          }
                      }
-                    "Shorts" -> {} //todo
+                    "Shorts" -> {
+                        tabs.add(ChannelTabInfo(
+                            url = "$TAB_RAW_URL?id=$id&type=shorts&name=$nameEncoded",
+                            type = ChannelTabType.SHORTS
+                        ))
+                    }
                     "Live" -> {
                         tabs.add(ChannelTabInfo(
-                            url = "$TAB_RAW_URL?id=$id&type=lives&name=$nameEncoded",
-                            type = ChannelTabType.LIVES
+                            url = "$TAB_RAW_URL?id=$id&type=live&name=$nameEncoded",
+                            type = ChannelTabType.LIVE
                         ))
                     }
                     "Playlists" -> {
@@ -151,41 +156,6 @@ class YouTubeChannelMainTabExtractor(
         clientResults: List<TaskResult>?,
         cookie: String?
     ): JobStepResult {
-        if (currentState == null) {
-            return JobStepResult.ContinueWith(
-                listOf(
-                    ClientTask(
-                        payload = Payload(
-                            RequestMethod.POST,
-                            BROWSE_URL,
-                            WEB_HEADER,
-                            getContinuationBody(getQueryValue(url, "continuation")!!)
-                        )
-                    )
-                ), PlainState(1)
-            )
-        } else {
-            val result = clientResults!!.first { it.taskId.isDefaultTask() }.result!!.asJson()
-            var nextPageUrl: String? = null
-            result.requireArray("/onResponseReceivedActions/0/appendContinuationItemsAction/continuationItems").forEach {
-                val videoRenderer = runCatching { it.requireObject("/richItemRenderer/content") }.getOrNull()
-                if (videoRenderer != null) {
-                    commit { parseFromVideoRenderer(
-                        data = videoRenderer,
-                        overrideChannelName = URLDecoder.decode(getQueryValue(url, "name"), "UTF-8"),
-                        overrideChannelId = getQueryValue(url, "id")
-                    ) }
-                } else { //continuation item
-                    nextPageUrl = replaceQueryValue(url, "continuation", it.requireString("/continuationItemRenderer/continuationEndpoint/continuationCommand/token"))
-                }
-            }
-            return JobStepResult.CompleteWith(ExtractResult(
-                errors = errors,
-                pagedData = PagedData(
-                    itemList = itemList,
-                    nextPageUrl = nextPageUrl
-                )
-            ))
-        }
+        return YouTubeChannelCommonVideoTabExtractor(url, ChannelTabType.VIDEOS).fetchGivenPage(url, sessionId, currentState, clientResults, cookie)
     }
 }
