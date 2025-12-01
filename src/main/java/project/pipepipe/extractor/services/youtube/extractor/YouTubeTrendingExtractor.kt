@@ -34,7 +34,7 @@ class YouTubeTrendingExtractor(
                             RequestMethod.POST,
                             BROWSE_URL,
                             WEB_HEADER,
-                            getTrendingInfoBody(if (type == "trending") "FEtrending" else "UC4R8DWoMoI7CAwX8_LjQHig")
+                            getTrendingInfoBody("UC4R8DWoMoI7CAwX8_LjQHig")
                         )
                     )
                 ), PlainState(1)
@@ -42,12 +42,6 @@ class YouTubeTrendingExtractor(
         } else {
             val result = clientResults!!.first { it.taskId.isDefaultTask() }.result!!.asJson()
             when (type) {
-                "trending" -> result
-                    .requireArray("/contents/twoColumnBrowseResultsRenderer/tabs/0/tabRenderer/content/sectionListRenderer/contents")
-                    .flatMap { it.requireArray("/itemSectionRenderer/contents/0/shelfRenderer/content/expandedShelfContentsRenderer/items") }
-                    .forEach {
-                        commit { parseFromVideoRenderer(it) }
-                    }
                 "recommended_lives" ->  result
                     .requireArray("/contents/twoColumnBrowseResultsRenderer/tabs/0/tabRenderer/content/richGridRenderer/contents")
                     .flatMap { runCatching{ it.requireArray("/richSectionRenderer/content/richShelfRenderer/contents") }.getOrDefault(emptyList()) }

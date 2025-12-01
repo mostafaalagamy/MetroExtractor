@@ -96,7 +96,6 @@ class YouTubeService(id: String) : StreamingService(id)  {
                 SearchType("movie", "$SEARCH_RAW_URL?type=movie&query=", sortFilters),
             ),
             trendingList = listOf(
-                TrendingInfo("$TRENDING_RAW_URL?name=trending", "YOUTUBE", "trending"),
                 TrendingInfo("$TRENDING_RAW_URL?name=recommended_lives", "YOUTUBE", "recommended_lives"),
             ),
             themeColor = "#e53935",
