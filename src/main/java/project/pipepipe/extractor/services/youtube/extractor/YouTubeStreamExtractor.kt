@@ -265,7 +265,7 @@ class YouTubeStreamExtractor(
                                         it.requireString("url"),
                                         parseMediaType(it.requireString("mimeType")).first,
                                         parseMediaType(it.requireString("mimeType")).second!!,
-                                        it.requireLong("averageBitrate"),
+                                        it.requireLong("bitrate"),
                                         "${it.requireInt("/indexRange/start")}-${it.requireInt("/indexRange/end")}",
                                         "${it.requireInt("/initRange/start")}-${it.requireInt("/initRange/end")}",
                                         if (hasMultiTracks) it.requireString("audioSampleRate") else null,
