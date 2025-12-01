@@ -7,6 +7,7 @@ import project.pipepipe.extractor.services.youtube.YouTubeLinks.SHORTS_URL
 import project.pipepipe.extractor.services.youtube.YouTubeLinks.STREAM_URL
 import project.pipepipe.extractor.utils.TimeAgoParser
 import project.pipepipe.extractor.utils.extractDigitsAsLong
+import project.pipepipe.extractor.utils.mixedNumberWordToLong
 import project.pipepipe.shared.utils.json.requireArray
 import project.pipepipe.shared.utils.json.requireString
 import project.pipepipe.shared.infoitem.StreamInfo
@@ -131,7 +132,7 @@ object YouTubeStreamInfoDataParser {
         val viewCount = allMetadataTexts.firstOrNull {
             it.contains("view", ignoreCase = true)
         }?.let {
-            runCatching { it.extractDigitsAsLong() }.getOrNull()
+            runCatching { mixedNumberWordToLong(it) }.getOrNull()
         }
         val uploaderName = overrideChannelName ?: data.requireString("/lockupViewModel/metadata/lockupMetadataViewModel/metadata/contentMetadataViewModel/metadataRows/0/metadataParts/0/text/content")
 
