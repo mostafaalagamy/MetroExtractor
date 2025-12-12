@@ -15,6 +15,7 @@ import project.pipepipe.shared.state.StreamExtractState
 import project.pipepipe.extractor.ExtractorContext.asJson
 import project.pipepipe.extractor.services.niconico.NicoNicoLinks.RELATED_VIDEO_URL
 import project.pipepipe.extractor.services.niconico.NicoNicoLinks.USER_URL
+import project.pipepipe.shared.downloader.isLoggedInCookie
 import project.pipepipe.shared.utils.json.requireArray
 import project.pipepipe.shared.utils.json.requireBoolean
 import project.pipepipe.shared.utils.json.requireLong
@@ -39,8 +40,12 @@ class NicoNicoStreamExtractor(
     ): JobStepResult {
         val id = parseStreamId(url)
         if (currentState == null) {
+            var header = HashMap(GOOGLE_HEADER)
+            if (cookie?.isLoggedInCookie() == true) {
+                header["Cookie"] = cookie
+            }
             return JobStepResult.ContinueWith(listOf(
-                ClientTask(payload = Payload(RequestMethod.GET, WATCH_URL + id, GOOGLE_HEADER)),
+                ClientTask(payload = Payload(RequestMethod.GET, WATCH_URL + id, header)),
             ), state = PlainState(1))
         } else if (currentState.step == 1) {
             val response = clientResults!!.first { it.taskId.isDefaultTask()}.result!!
@@ -207,7 +212,7 @@ class NicoNicoStreamExtractor(
                 ClientTask(payload = Payload(
                     RequestMethod.POST,
                     getAccessUrl(id!!, watchData.requireString("/data/response/client/watchTrackId")),
-                    getAccessHeaders(watchData.requireString("/data/response/media/domand/accessRightKey")),
+                    getAccessHeaders(watchData.requireString("/data/response/media/domand/accessRightKey"), cookie),
                     body
                 ))), state = StreamExtractState(2, streamInfo))
         } else {
@@ -215,14 +220,21 @@ class NicoNicoStreamExtractor(
             val response = clientResults!!.first { it.taskId.isDefaultTask()}
             streamInfo.hlsUrl = response.result!!.asJson().requireString("/data/contentUrl")
             streamInfo.headers = hashMapOf("Cookie" to response.responseHeader!!["set-cookie"]!![0].split(";").first { it.trim().startsWith("domand_bid=") })
+            if (cookie?.isLoggedInCookie() == true) {
+                streamInfo.headers["Cookie"] += ";$cookie"
+            }
             return JobStepResult.CompleteWith(ExtractResult(streamInfo))
         }
     }
-    fun getAccessHeaders(key: String) = mapOf(
+    fun getAccessHeaders(key: String, cookie: String?) = hashMapOf(
         "Referer" to "https://www.nicovideo.jp/",
         "X-Frontend-Id" to "6",
         "X-Frontend-Version" to "0",
         "X-Request-With" to "nicovideo",
         "X-Access-Right-Key" to key,
-    )
+    ).apply {
+        cookie?.let {
+            put("Cookie", cookie)
+        }
+    }
 }

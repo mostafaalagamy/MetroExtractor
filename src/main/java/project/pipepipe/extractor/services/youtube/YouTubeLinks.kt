@@ -4,6 +4,7 @@ import project.pipepipe.extractor.utils.generateRandomString
 
 object YouTubeLinks {
     const val VIDEO_INFO_URL = "https://www.youtube.com/youtubei/v1/player?prettyPrint=false&\$fields=microformat,playabilityStatus,storyboards,videoDetails"
+    const val VIDEO_PLAYER_URL = "https://www.youtube.com/youtubei/v1/player?prettyPrint=false"
     fun getAndroidFetchStreamUrl(id: String) = "https://youtubei.googleapis.com/youtubei/v1/reel/reel_item_watch?prettyPrint=false&t=${generateRandomString(12)}&id=$id&\$fields=playerResponse"
     const val NEXT_URL = "https://www.youtube.com/youtubei/v1/next?prettyPrint=false"
     const val SEARCH_RAW_URL = "search://youtube.raw"
