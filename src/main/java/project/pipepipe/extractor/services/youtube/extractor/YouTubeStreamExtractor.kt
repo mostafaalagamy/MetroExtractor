@@ -27,7 +27,6 @@ import project.pipepipe.extractor.utils.parseMediaType
 import project.pipepipe.shared.downloader.isLoggedInCookie
 import project.pipepipe.shared.infoitem.RelatedItemInfo
 import project.pipepipe.shared.infoitem.StreamInfo
-import project.pipepipe.shared.infoitem.StreamType
 import project.pipepipe.shared.infoitem.helper.stream.*
 import project.pipepipe.shared.infoitem.helper.stream.Description.Companion.PLAIN_TEXT
 import project.pipepipe.shared.job.*
@@ -279,7 +278,6 @@ class YouTubeStreamExtractor(
             ).apply {
                 when (isLive) {
                     false -> {
-                        streamType = StreamType.VIDEO_STREAM
                         duration = playData.requireLong("/videoDetails/lengthSeconds")
                         sponsorblockUrl = "sponsorblock://youtube.raw?id=$id"
 
@@ -348,7 +346,7 @@ class YouTubeStreamExtractor(
                             }
                     }
                     true -> {
-                        streamType = StreamType.LIVE_STREAM
+                        this.isLive = true
                         hlsUrl = if (isLoggedIn) {
                             backupData!!.requireString("/streamingData/hlsManifestUrl")
                         } else {

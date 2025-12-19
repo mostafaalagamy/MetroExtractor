@@ -21,7 +21,6 @@ import project.pipepipe.shared.utils.json.requireBoolean
 import project.pipepipe.shared.utils.json.requireLong
 import project.pipepipe.shared.utils.json.requireString
 import project.pipepipe.shared.infoitem.StreamInfo
-import project.pipepipe.shared.infoitem.StreamType
 import project.pipepipe.shared.infoitem.helper.stream.Description
 import project.pipepipe.shared.job.*
 import project.pipepipe.shared.state.PlainState
@@ -169,7 +168,6 @@ class NicoNicoStreamExtractor(
                 url = WATCH_URL + id,
                 serviceId = "NICONICO",
                 name = watchData.requireString("/data/response/video/title"),
-                streamType = StreamType.VIDEO_STREAM,
                 uploaderName =
                     if (isChannel(watchData)) runCatching {
                         watchData.requireString("/data/response/channel/name")

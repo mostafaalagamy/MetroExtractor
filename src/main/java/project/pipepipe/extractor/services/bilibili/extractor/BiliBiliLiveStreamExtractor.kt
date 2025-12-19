@@ -8,7 +8,6 @@ import project.pipepipe.extractor.services.bilibili.BiliBiliLinks.QUERY_LIVEROOM
 import project.pipepipe.extractor.services.bilibili.BilibiliService
 import project.pipepipe.extractor.services.bilibili.Utils
 import project.pipepipe.shared.infoitem.StreamInfo
-import project.pipepipe.shared.infoitem.StreamType
 import project.pipepipe.shared.job.*
 import project.pipepipe.shared.state.PlainState
 import project.pipepipe.shared.state.State
@@ -70,7 +69,7 @@ class BiliBiliLiveStreamExtractor(
             val streamInfo = StreamInfo(
                 url = LIVE_REFERER + roomId,
                 serviceId = "BILIBILI",
-                streamType = StreamType.LIVE_STREAM,
+                isLive = true,
                 uploadDate = data.requireLong("/data/live_time") * 1000,
                 hlsUrl = hlsUrl,
                 isPortrait = data.requireBoolean("/data/is_portrait"),

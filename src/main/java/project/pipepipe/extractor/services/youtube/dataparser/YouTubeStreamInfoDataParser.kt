@@ -11,7 +11,6 @@ import project.pipepipe.extractor.utils.mixedNumberWordToLong
 import project.pipepipe.shared.utils.json.requireArray
 import project.pipepipe.shared.utils.json.requireString
 import project.pipepipe.shared.infoitem.StreamInfo
-import project.pipepipe.shared.infoitem.StreamType
 import project.pipepipe.shared.utils.json.requireObject
 
 object YouTubeStreamInfoDataParser {
@@ -49,7 +48,6 @@ object YouTubeStreamInfoDataParser {
         ).apply {
             when (isLive) {
                 false -> {
-                    streamType = StreamType.VIDEO_STREAM
                     uploadDate =
                        runCatching { TimeAgoParser.parseToTimestamp(data.requireString("/videoRenderer/publishedTimeText/simpleText")) }.getOrNull()
                     duration = parseDurationString(data.requireString("/videoRenderer/lengthText/simpleText"))
@@ -57,7 +55,7 @@ object YouTubeStreamInfoDataParser {
                     isShort = _isShort
                 }
                 true -> {
-                    streamType = StreamType.LIVE_STREAM
+                    this.isLive = true
                     viewCount = runCatching{ data.requireString("/videoRenderer/viewCountText/runs/0/text").extractDigitsAsLong() }.getOrNull()
                 }
             }
@@ -94,7 +92,6 @@ object YouTubeStreamInfoDataParser {
             url = STREAM_URL + data.requireString("/playlistVideoRenderer/videoId"),
             serviceId = "YOUTUBE",
             viewCount = viewCount,
-            streamType = StreamType.VIDEO_STREAM,
             duration = runCatching{ parseDurationString(data.requireString("/playlistVideoRenderer/lengthText/simpleText")) }.getOrNull(),
             uploadDate = uploadDate,
             name = data.requireString("/playlistVideoRenderer/title/runs/0/text"),
@@ -159,9 +156,8 @@ object YouTubeStreamInfoDataParser {
             viewCount = viewCount
         ).apply {
             if (isLive) {
-                streamType = StreamType.LIVE_STREAM
+                this.isLive = true
             } else {
-                streamType = StreamType.VIDEO_STREAM
                 duration = extractDuration(data)
                 uploadDate?.let { this.uploadDate = it }
             }
@@ -177,7 +173,6 @@ object YouTubeStreamInfoDataParser {
             uploaderUrl = CHANNEL_URL + overrideChannelId,
             thumbnailUrl = data.requireArray("/shortsLockupViewModel/onTap/innertubeCommand/reelWatchEndpoint/thumbnail/thumbnails").last().requireString("url"),
             isPaid = false, // todo: there do exist paid shorts but I have no data point
-            streamType = StreamType.VIDEO_STREAM,
             isShort = true,
             viewCount = runCatching { data.requireString("/shortsLockupViewModel/overlayMetadata/secondaryText/content").extractDigitsAsLong() }.getOrNull()
         )

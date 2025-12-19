@@ -8,7 +8,6 @@ import project.pipepipe.extractor.services.bilibili.BiliBiliUrlParser
 import project.pipepipe.extractor.services.bilibili.Utils
 import project.pipepipe.extractor.utils.getDurationFromString
 import project.pipepipe.shared.infoitem.StreamInfo
-import project.pipepipe.shared.infoitem.StreamType
 import project.pipepipe.shared.utils.json.requireArray
 import project.pipepipe.shared.utils.json.requireInt
 import project.pipepipe.shared.utils.json.requireLong
@@ -26,7 +25,6 @@ object BiliBiliStreamInfoDataParser {
             ),
             serviceId = "BILIBILI",
             thumbnailUrl = "https:" + item.requireString("pic"),
-            streamType = StreamType.VIDEO_STREAM,
             duration = getDurationFromString(item.requireString("duration")),
             viewCount = item.requireLong("play"),
             uploaderName = item.requireString("author"),
@@ -43,7 +41,6 @@ object BiliBiliStreamInfoDataParser {
             name = item.requireString("title"),
             serviceId = "BILIBILI",
             thumbnailUrl = item.requireString("pic").replace("http:", "https:"),
-            streamType = StreamType.VIDEO_STREAM,
             duration = item.requireLong("duration"),
             viewCount = item.requireObject("stat").requireLong("view"),
             uploaderName = item.requireObject("owner").requireString("name"),
@@ -66,7 +63,6 @@ object BiliBiliStreamInfoDataParser {
             name = item.requireString("title"),
             serviceId = "BILIBILI",
             thumbnailUrl = item.requireString("pic").replace("http", "https"),
-            streamType = StreamType.VIDEO_STREAM,
             duration = item.requireLong("duration"),
             viewCount = item.requireObject("stat").requireLong("view"),
             uploaderName = item.requireObject("owner").requireString("name"),
@@ -90,7 +86,6 @@ object BiliBiliStreamInfoDataParser {
             name = item.requireString("part"),
             serviceId = "BILIBILI",
             thumbnailUrl = thumbnailUrl,
-            streamType = StreamType.VIDEO_STREAM,
             duration = item.requireLong("duration"),
             uploaderName = uploaderName,
             uploaderUrl = uploaderUrl,
@@ -109,7 +104,6 @@ object BiliBiliStreamInfoDataParser {
             url = "${BiliBiliLinks.VIDEO_BASE_URL}$id?p=$p",
             name = "P$p ${item.requireString("part")}",
             serviceId = "BILIBILI",
-            streamType = StreamType.VIDEO_STREAM,
             duration = item.requireLong("duration"),
             viewCount = null,
             uploadDate = item.requireLong("ctime") * 1000,
@@ -129,7 +123,7 @@ object BiliBiliStreamInfoDataParser {
             name = data.requireString("title"),
             serviceId = "BILIBILI",
             thumbnailUrl = thumbnailUrl.replace("http:", "https:"),
-            streamType = StreamType.LIVE_STREAM,
+            isLive = true,
             viewCount = data.requireObject("watched_show").requireLong("num"),
             uploaderName = data.requireString("uname"),
             headers = hashMapOf("Referer" to "https://www.bilibili.com")
@@ -162,7 +156,6 @@ object BiliBiliStreamInfoDataParser {
             },
             serviceId = "BILIBILI",
             thumbnailUrl = data.requireString("cover").replace("http:", "https:"),
-            streamType = StreamType.VIDEO_STREAM,
             duration = data.requireLong("duration") / 1000,
             uploaderName = data.requireString("org_title")
                 .replace("<em class=\"keyword\">", "")
@@ -193,7 +186,7 @@ object BiliBiliStreamInfoDataParser {
             } else {
                 "https:" + item.requireString("user_cover")
             },
-            streamType = StreamType.LIVE_STREAM,
+            isLive = true,
             duration = -1,
             viewCount = item.requireLong("online"),
             uploaderName = item.requireString("uname"),
@@ -220,7 +213,6 @@ object BiliBiliStreamInfoDataParser {
             name = item.requireString("title"),
             serviceId = "BILIBILI",
             thumbnailUrl = item.requireString("cover").replace("http:", "https:"),
-            streamType = StreamType.VIDEO_STREAM,
             duration = try {
                 item.requireLong("duration")
             } catch (e: Exception) {
@@ -247,7 +239,6 @@ object BiliBiliStreamInfoDataParser {
             name = item.requireString("title"),
             serviceId = "BILIBILI",
             thumbnailUrl = item.requireString("pic").replace("http:", "https:"),
-            streamType = StreamType.VIDEO_STREAM,
             duration = try {
                 item.requireLong("duration")
             } catch (e: Exception) {
