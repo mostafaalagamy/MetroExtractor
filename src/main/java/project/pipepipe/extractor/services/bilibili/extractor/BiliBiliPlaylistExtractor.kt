@@ -76,7 +76,7 @@ class BiliBiliPlaylistExtractor(url: String) : Extractor<PlaylistInfo, StreamInf
         return JobStepResult.CompleteWith(ExtractResult(PlaylistInfo(
             url = url,
             name = URLDecoder.decode(url.split("name=")[1].split("&")[0], "UTF-8"),
-            serviceId = "BILIBILI",
+            serviceId = 5,
             thumbnailUrl = thumbnailUrl,
             uploaderUrl = uploaderUrl,
             uploaderAvatarUrl = uploaderAvatarUrl,
@@ -101,7 +101,7 @@ class BiliBiliPlaylistExtractor(url: String) : Extractor<PlaylistInfo, StreamInf
         return JobStepResult.CompleteWith(ExtractResult(PlaylistInfo(
             url = url,
             name = URLDecoder.decode(url.split("name=")[1].split("&")[0], "UTF-8"),
-            serviceId = "BILIBILI",
+            serviceId = 5,
             thumbnailUrl  = runCatching{ playlistData.requireString("/meta/cover") }.getOrElse { itemList[0].thumbnailUrl },
             streamCount  = playlistData.requireLong("/page/total"),
             uploaderUrl = BiliBiliLinks.CHANNEL_BASE_URL + Utils.getMidFromRecordApiUrl(url),

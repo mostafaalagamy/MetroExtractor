@@ -17,7 +17,7 @@ import project.pipepipe.shared.infoitem.helper.SearchType
 import project.pipepipe.shared.job.Payload
 import project.pipepipe.shared.job.RequestMethod
 
-class NicoNicoService(id: String): StreamingService(id)  {
+class NicoNicoService(id: Int): StreamingService(id)  {
     companion object {
         val GOOGLE_HEADER = mapOf(
             "User-Agent" to "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
@@ -89,7 +89,8 @@ class NicoNicoService(id: String): StreamingService(id)  {
 
     override val serviceInfo: SupportedServiceInfo
         get() = SupportedServiceInfo(
-            serviceId = "NICONICO",
+            serviceId = 6,
+            serviceName = "NicoNico",
             suggestionPayload = Payload(RequestMethod.GET, SUGGESTION_URL),
             suggestionStringPath = Pair("/candidates", "/"),
             suggestionJsonBetween = null,
@@ -99,7 +100,7 @@ class NicoNicoService(id: String): StreamingService(id)  {
             ),
             themeColor = "#9e9e9e",
             trendingList = listOf(
-                TrendingInfo("$TRENDING_RAW_URL?name=trending", "NICONICO", "trending")
+                TrendingInfo("$TRENDING_RAW_URL?name=trending", 6, "trending")
             ),
             urlPatterns = mapOf(
                 ExternalUrlType.STREAM to listOf(

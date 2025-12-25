@@ -11,7 +11,7 @@ object BiliBiliChannelInfoDataParser {
         return ChannelInfo(
             url = BiliBiliLinks.CHANNEL_BASE_URL + data.requireLong("mid"),
             name = data.requireString("uname"),
-            serviceId = "BILIBILI",
+            serviceId = 5,
             thumbnailUrl = "https:" + data.requireString("upic"),
             description = data.requireString("usign"),
             subscriberCount = data.requireLong("fans"),

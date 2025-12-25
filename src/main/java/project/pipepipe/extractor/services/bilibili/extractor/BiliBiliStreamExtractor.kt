@@ -55,7 +55,7 @@ class BiliBiliStreamExtractor(
             ), state = StreamExtractState(
                 1, StreamInfo(
                     url,
-                    "BILIBILI"
+                    5
                 )
             ))
         } else if (currentState.step == 1) {
@@ -89,7 +89,7 @@ class BiliBiliStreamExtractor(
         )
         val pageNum = pageNumString?.toIntOrNull() ?: 1
 
-        val streamInfo = StreamInfo("$VIDEO_BASE_URL$bvid?p=$pageNum", "BILIBILI")
+        val streamInfo = StreamInfo("$VIDEO_BASE_URL$bvid?p=$pageNum", 5)
         val headers = BilibiliService.getHeadersWithCookie(url, cookie)
 
         val page = watchData.requireArray("pages")[pageNum - 1]

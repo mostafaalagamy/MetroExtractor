@@ -28,11 +28,9 @@ object YouTubeCommentInfoDataParser {
             isPinned = runCatching{ commentViewModel?.requireObject("/commentViewModel/commentViewModel") }.getOrNull()?.has("pinnedText"),
             replyCount = runCatching{ parseNumberWithSuffix(data.requireString("/payload/commentEntityPayload/toolbar/replyCount")).toInt()}.getOrNull(),
             replyInfo = if (replyUrl != null) {
-                CommentInfo.builder()
-                .url(replyUrl)
-                .serviceId("YOUTUBE").build()} else null,
+                CommentInfo(url = replyUrl, serviceId = 0)} else null,
             images = null,
-            serviceId = "YOUTUBE",
+            serviceId = 0,
             url = "$COMMENT_RAW_URL?id=${data.requireString("entityKey")}"
         )
     }

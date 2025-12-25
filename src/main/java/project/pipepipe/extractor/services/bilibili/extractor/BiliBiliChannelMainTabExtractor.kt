@@ -79,7 +79,7 @@ class BiliBiliChannelMainTabExtractor(url: String) : Extractor<ChannelInfo, Stre
                 info = ChannelInfo(
                     url = newUrl,
                     name = cardData.requireString("name"),
-                    serviceId = "BILIBILI",
+                    serviceId = 5,
                     thumbnailUrl = safeGet { cardData.requireString("face").replace("http:", "https:") },
                     bannerUrl = safeGet { userInfoData.requireString("/data/space/l_img").replace("http:", "https:") },
                     subscriberCount = safeGet { cardData.requireLong("fans") },

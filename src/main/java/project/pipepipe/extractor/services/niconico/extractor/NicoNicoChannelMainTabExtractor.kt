@@ -101,7 +101,7 @@ class NicoNicoChannelMainTabExtractor(url: String) : Extractor<ChannelInfo, Stre
                 info = ChannelInfo(
                     url = channelUrl,
                     name = channelName,
-                    serviceId = "NICONICO",
+                    serviceId = 6,
                     thumbnailUrl = thumbnailUrl,
                     subscriberCount = subscriberCount,
                     description = description,

@@ -63,12 +63,12 @@ object BiliBiliCommentsInfoDataParser {
             uploadDate = data.requireLong("ctime") * 1000,
             likeCount = data.requireInt("like"),
             replyCount = data.requireInt("rcount"),
-            replyInfo = getReplyMetaInfo().getOrNull()?.let { CommentInfo.builder().url(it).serviceId("BILIBILI").build() },
+            replyInfo = getReplyMetaInfo().getOrNull()?.let { CommentInfo(it, 5) },
             isHeartedByUploader = data.requireObject("up_action").requireBoolean("like"),
             isPinned = runCatching { data.requireBoolean("isTop") }.getOrNull(),
             images = getImage().getOrNull(),
             authorVerified = null,
-            serviceId = "BILIBILI"
+            serviceId = 5
         )
     }
 }

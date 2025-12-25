@@ -68,7 +68,7 @@ class BiliBiliLiveStreamExtractor(
 
             val streamInfo = StreamInfo(
                 url = LIVE_REFERER + roomId,
-                serviceId = "BILIBILI",
+                serviceId = 5,
                 isLive = true,
                 uploadDate = data.requireLong("/data/live_time") * 1000,
                 hlsUrl = hlsUrl,

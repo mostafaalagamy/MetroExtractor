@@ -35,7 +35,7 @@ object YouTubeStreamInfoDataParser {
 
         return StreamInfo(
             url = STREAM_URL + data.requireString("/videoRenderer/videoId"),
-            serviceId = "YOUTUBE",
+            serviceId = 0,
             name = data.requireString("/videoRenderer/title/runs/0/text"),
             uploaderName = runCatching{ data.requireString("/videoRenderer/longBylineText/runs/0/text") }.getOrDefault(overrideChannelName),
             uploaderUrl = runCatching{ CHANNEL_URL + data.requireString("/videoRenderer/longBylineText/runs/0/navigationEndpoint/browseEndpoint/browseId") }.getOrDefault(CHANNEL_URL + overrideChannelId),
@@ -90,7 +90,7 @@ object YouTubeStreamInfoDataParser {
         }
         return StreamInfo(
             url = STREAM_URL + data.requireString("/playlistVideoRenderer/videoId"),
-            serviceId = "YOUTUBE",
+            serviceId = 0,
             viewCount = viewCount,
             duration = runCatching{ parseDurationString(data.requireString("/playlistVideoRenderer/lengthText/simpleText")) }.getOrNull(),
             uploadDate = uploadDate,
@@ -136,7 +136,7 @@ object YouTubeStreamInfoDataParser {
 
         return StreamInfo(
             url = STREAM_URL + data.requireString("/lockupViewModel/contentId"),
-            serviceId = "YOUTUBE",
+            serviceId = 0,
             name = data.requireString("/lockupViewModel/metadata/lockupMetadataViewModel/title/content"),
             uploaderName = uploaderName,
             uploaderUrl = if (useOverride) {
@@ -167,7 +167,7 @@ object YouTubeStreamInfoDataParser {
     fun parseFromShortsLockupViewModel(data: JsonNode, overrideChannelName: String, overrideChannelId: String): StreamInfo {
         return StreamInfo(
             url = SHORTS_URL + data.requireString("/shortsLockupViewModel/onTap/innertubeCommand/reelWatchEndpoint/videoId"),
-            serviceId = "YOUTUBE",
+            serviceId = 0,
             name = data.requireString("/shortsLockupViewModel/overlayMetadata/primaryText/content"),
             uploaderName = overrideChannelName,
             uploaderUrl = CHANNEL_URL + overrideChannelId,

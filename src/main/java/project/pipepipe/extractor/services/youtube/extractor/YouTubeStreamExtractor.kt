@@ -256,7 +256,7 @@ class YouTubeStreamExtractor(
 
             val streamInfo = StreamInfo(
                 url = STREAM_URL + id,
-                serviceId = "YOUTUBE",
+                serviceId = 0,
                 name =  nextData.requireString("/contents/twoColumnWatchNextResults/results/results/contents/0/videoPrimaryInfoRenderer/title/runs/0/text"),
                 uploaderName = nextData.requireString("/contents/twoColumnWatchNextResults/results/results/contents/1/videoSecondaryInfoRenderer/owner/videoOwnerRenderer/title/runs/0/text"),
                 uploadDate = safeGet { OffsetDateTime.parse(info.requireString("/microformat/playerMicroformatRenderer/uploadDate")).toInstant().toEpochMilli() },

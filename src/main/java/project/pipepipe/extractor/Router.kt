@@ -23,10 +23,10 @@ object Router {
         return "$type://$content"
     }
     fun getExtractor(url: String): Extractor<*, *>? = ExtractorContext.ServiceList.all.firstNotNullOfOrNull { it.route(url) }
-    fun getService(serviceId: String) = when(serviceId) {
-        "BILIBILI" -> ExtractorContext.ServiceList.BiliBili
-        "YOUTUBE" -> ExtractorContext.ServiceList.YouTube
-        "NICONICO" -> ExtractorContext.ServiceList.NicoNico
+    fun getService(serviceId: Int) = when(serviceId) {
+        5 -> ExtractorContext.ServiceList.BiliBili
+        0 -> ExtractorContext.ServiceList.YouTube
+        6 -> ExtractorContext.ServiceList.NicoNico
         else -> throw IllegalArgumentException("Unknown service ID: $serviceId")
     }
     suspend fun route(request: JobRequest, sessionId: String, currentState: State?): JobStepResult {

@@ -27,7 +27,7 @@ object NicoNicoStreamInfoDataParser {
         }
         return StreamInfo(
             url = WATCH_URL + item.requireString("id"),
-            serviceId = "NICONICO",
+            serviceId = 6,
             name = item.requireString("title"),
             uploaderName = runCatching { item.requireString("/owner/name") }.getOrNull(),
             uploaderUrl = runCatching {
@@ -80,7 +80,7 @@ object NicoNicoStreamInfoDataParser {
 
         return StreamInfo(
             url = url.substringBefore("?"),
-            serviceId = "NICONICO",
+            serviceId = 6,
             name = title,
             uploaderName = userName,
             uploaderUrl = userUrl,

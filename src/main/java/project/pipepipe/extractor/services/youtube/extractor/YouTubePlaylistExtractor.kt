@@ -64,7 +64,7 @@ class YouTubePlaylistExtractor(
             return JobStepResult.CompleteWith(
                 ExtractResult(
                     info = PlaylistInfo(
-                        serviceId = "YOUTUBE",
+                        serviceId = 0,
                         url = result.requireString("/microformat/microformatDataRenderer/urlCanonical")
                             .setType("https"),
                         name = result.requireString("/microformat/microformatDataRenderer/title"),

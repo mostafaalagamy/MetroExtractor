@@ -166,7 +166,7 @@ class NicoNicoStreamExtractor(
 
             val streamInfo = StreamInfo(
                 url = WATCH_URL + id,
-                serviceId = "NICONICO",
+                serviceId = 6,
                 name = watchData.requireString("/data/response/video/title"),
                 uploaderName =
                     if (isChannel(watchData)) runCatching {

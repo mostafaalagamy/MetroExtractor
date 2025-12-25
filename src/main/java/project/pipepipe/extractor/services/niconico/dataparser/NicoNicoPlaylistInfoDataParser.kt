@@ -16,7 +16,7 @@ object NicoNicoPlaylistInfoDataParser {
             item.requireObject("owner").requireString("id"),
             item.requireLong("id").toString()
         ),
-        serviceId = "NICONICO",
+        serviceId = 6,
         name = runCatching {
             item.requireString("name")
         }.getOrElse {
@@ -36,7 +36,7 @@ object NicoNicoPlaylistInfoDataParser {
 
     fun parseFromSeriesJson(item: JsonNode, uploaderName: String) = PlaylistInfo(
         url = SERIES_URL + item.requireLong("id"),
-        serviceId = "NICONICO",
+        serviceId = 6,
         name = item.requireString("title"),
         thumbnailUrl = runCatching { item.requireString("thumbnailUrl") }.getOrNull(),
         uploaderName = uploaderName,

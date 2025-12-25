@@ -10,7 +10,7 @@ import project.pipepipe.shared.utils.json.requireString
 object NicoNicoLiveStreamInfoDataParser {
     fun parseFromLiveHistoryJson(item: JsonNode) = StreamInfo(
         url = WATCH_URL + item.requireObject("linkedContent").requireString("contentId"),
-        serviceId = "NICONICO",
+        serviceId = 6,
         name = item.requireObject("program").requireString("title"),
         uploaderName = runCatching {
             item.requireObject("programProvider").requireString("name")

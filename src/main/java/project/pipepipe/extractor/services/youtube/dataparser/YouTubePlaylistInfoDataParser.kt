@@ -32,7 +32,7 @@ object YouTubePlaylistInfoDataParser {
             streamCount = data.requireString("/lockupViewModel/contentImage/collectionThumbnailViewModel/primaryThumbnail/thumbnailViewModel/overlays/0/thumbnailOverlayBadgeViewModel/thumbnailBadges/0/thumbnailBadgeViewModel/text")
                 .extractDigitsAsLong(),
             url = playlistUrl,
-            serviceId = "YOUTUBE",
+            serviceId = 0,
             name = data.requireString("/lockupViewModel/metadata/lockupMetadataViewModel/title/content"),
             uploaderName = overrideName?:data.requireString("/lockupViewModel/metadata/lockupMetadataViewModel/metadata/contentMetadataViewModel/metadataRows/0/metadataParts/0/text/content"),
             uploaderUrl = uploaderUrl,

@@ -12,7 +12,7 @@ object YouTubeChannelInfoDataParser {
         return ChannelInfo(
             url = CHANNEL_URL + item.requireString("/channelRenderer/navigationEndpoint/browseEndpoint/browseId"),
             name = item.requireString("/channelRenderer/title/simpleText"),
-            serviceId = "YOUTUBE",
+            serviceId = 0,
             thumbnailUrl = "https:" + item.requireArray("/channelRenderer/thumbnail/thumbnails").last().requireString("url"),
             description = runCatching { item.requireString("/channelRenderer/descriptionSnippet/runs/0/text") }.getOrNull(),
             subscriberCount = runCatching{ mixedNumberWordToLong(item.requireString("/channelRenderer/videoCountText/simpleText")) }.getOrNull(),

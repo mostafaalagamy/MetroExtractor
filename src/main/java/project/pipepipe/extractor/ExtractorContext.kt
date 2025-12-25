@@ -20,10 +20,10 @@ object ExtractorContext {
 
 
     object ServiceList {
-        val YouTube = YouTubeService("YOUTUBE")
+        val YouTube = YouTubeService(0)
 //        val Bandcamp = BandcampService(4)
-        val BiliBili = BilibiliService("BILIBILI")
-        val NicoNico = NicoNicoService("NICONICO")
+        val BiliBili = BilibiliService(5)
+        val NicoNico = NicoNicoService(6)
         val all = listOf(YouTube,BiliBili, NicoNico)
     }
 }

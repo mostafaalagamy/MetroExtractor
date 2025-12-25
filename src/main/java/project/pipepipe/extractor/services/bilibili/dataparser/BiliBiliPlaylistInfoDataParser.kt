@@ -35,7 +35,7 @@ object BiliBiliPlaylistInfoDataParser {
         return PlaylistInfo(
             url = url,
             name = metaObject.requireString("name"),
-            serviceId = "BILIBILI",
+            serviceId = 5,
             thumbnailUrl = metaObject.requireString("cover").replace("http://", "https://"),
             uploaderName = uploaderName,
             uploaderUrl = uploaderUrl,

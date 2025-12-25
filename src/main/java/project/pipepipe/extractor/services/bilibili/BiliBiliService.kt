@@ -15,7 +15,7 @@ import project.pipepipe.shared.infoitem.helper.SearchType
 import project.pipepipe.shared.job.Payload
 import project.pipepipe.shared.job.RequestMethod
 
-class BilibiliService(id: String) : StreamingService(id) {
+class BilibiliService(id: Int) : StreamingService(id) {
 
     companion object {
         fun mapToCookieHeader(cookies: Map<String, String>?): String {
@@ -82,7 +82,8 @@ class BilibiliService(id: String) : StreamingService(id) {
     override fun route(url: String) = BiliBiliUrlRouter.route(url)
     override val serviceInfo: SupportedServiceInfo
         get() = SupportedServiceInfo(
-            serviceId = "BILIBILI",
+            serviceId = 5,
+            serviceName = "BiliBili",
             suggestionPayload = Payload(
                 RequestMethod.GET,
                 GET_SUGGESTION_URL
@@ -95,8 +96,8 @@ class BilibiliService(id: String) : StreamingService(id) {
                 SearchType("channels", "$SEARCH_BASE_URL?search_type=bili_user&keyword="),
             ),
             trendingList = listOf(
-                TrendingInfo("$TRENDING_RAW_URL?name=trending", "BILIBILI", "trending"),
-                TrendingInfo("$TRENDING_RAW_URL?name=recommended_lives", "BILIBILI", "recommended_lives"),
+                TrendingInfo("$TRENDING_RAW_URL?name=trending", 5, "trending"),
+                TrendingInfo("$TRENDING_RAW_URL?name=recommended_lives", 5, "recommended_lives"),
             ),
             feedFetchInterval = 500,
             themeColor = "#FB7299",

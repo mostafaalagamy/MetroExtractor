@@ -66,7 +66,7 @@ class NicoNicoSeriesExtractor(url: String) : Extractor<PlaylistInfo, StreamInfo>
             return JobStepResult.CompleteWith(
                 ExtractResult(
                     info = PlaylistInfo(
-                        serviceId = "NICONICO",
+                        serviceId = 6,
                         url = url,
                         name = name,
                         thumbnailUrl = avatar,

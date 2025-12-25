@@ -15,7 +15,7 @@ import project.pipepipe.shared.infoitem.helper.SearchType
 import project.pipepipe.shared.job.Payload
 import project.pipepipe.shared.job.RequestMethod
 
-class YouTubeService(id: String) : StreamingService(id)  {
+class YouTubeService(id: Int) : StreamingService(id)  {
     companion object {
 
     }
@@ -81,7 +81,8 @@ class YouTubeService(id: String) : StreamingService(id)  {
 
     override val serviceInfo: SupportedServiceInfo
         get() = SupportedServiceInfo(
-            serviceId = "YOUTUBE",
+            serviceId = 0,
+            serviceName = "YouTube",
             suggestionPayload = Payload(
               RequestMethod.GET,
                 GET_SUGGESTION_URL
@@ -96,7 +97,7 @@ class YouTubeService(id: String) : StreamingService(id)  {
                 SearchType("movie", "$SEARCH_RAW_URL?type=movie&query=", sortFilters),
             ),
             trendingList = listOf(
-                TrendingInfo("$TRENDING_RAW_URL?name=recommended_lives", "YOUTUBE", "recommended_lives"),
+                TrendingInfo("$TRENDING_RAW_URL?name=recommended_lives", 0, "recommended_lives"),
             ),
             themeColor = "#e53935",
             urlPatterns = mapOf(

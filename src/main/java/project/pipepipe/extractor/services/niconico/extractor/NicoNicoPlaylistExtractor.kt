@@ -70,7 +70,7 @@ class NicoNicoPlaylistExtractor(url: String) : Extractor<PlaylistInfo, StreamInf
             return JobStepResult.CompleteWith(
                 ExtractResult(
                     info = PlaylistInfo(
-                        serviceId = "NICONICO",
+                        serviceId = 6,
                         url = url,
                         name = data.requireString("name"),
                         thumbnailUrl = safeGet { owner.requireString("iconUrl") },

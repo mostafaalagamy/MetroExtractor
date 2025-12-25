@@ -23,7 +23,7 @@ object BiliBiliStreamInfoDataParser {
                     .replace("<em class=\"keyword\">", "")
                     .replace("</em>", "")
             ),
-            serviceId = "BILIBILI",
+            serviceId = 5,
             thumbnailUrl = "https:" + item.requireString("pic"),
             duration = getDurationFromString(item.requireString("duration")),
             viewCount = item.requireLong("play"),
@@ -39,7 +39,7 @@ object BiliBiliStreamInfoDataParser {
         return StreamInfo(
             url = BiliBiliLinks.VIDEO_BASE_URL + item.requireString("bvid") + "?p=1",
             name = item.requireString("title"),
-            serviceId = "BILIBILI",
+            serviceId = 5,
             thumbnailUrl = item.requireString("pic").replace("http:", "https:"),
             duration = item.requireLong("duration"),
             viewCount = item.requireObject("stat").requireLong("view"),
@@ -61,7 +61,7 @@ object BiliBiliStreamInfoDataParser {
         return StreamInfo(
             url = "${BiliBiliLinks.VIDEO_BASE_URL}$actualId?p=1",
             name = item.requireString("title"),
-            serviceId = "BILIBILI",
+            serviceId = 5,
             thumbnailUrl = item.requireString("pic").replace("http", "https"),
             duration = item.requireLong("duration"),
             viewCount = item.requireObject("stat").requireLong("view"),
@@ -84,7 +84,7 @@ object BiliBiliStreamInfoDataParser {
         return StreamInfo(
             url = "${BiliBiliLinks.VIDEO_BASE_URL}$bvid?p=${item.requireInt("page")}",
             name = item.requireString("part"),
-            serviceId = "BILIBILI",
+            serviceId = 5,
             thumbnailUrl = thumbnailUrl,
             duration = item.requireLong("duration"),
             uploaderName = uploaderName,
@@ -103,7 +103,7 @@ object BiliBiliStreamInfoDataParser {
         return StreamInfo(
             url = "${BiliBiliLinks.VIDEO_BASE_URL}$id?p=$p",
             name = "P$p ${item.requireString("part")}",
-            serviceId = "BILIBILI",
+            serviceId = 5,
             duration = item.requireLong("duration"),
             viewCount = null,
             uploadDate = item.requireLong("ctime") * 1000,
@@ -121,7 +121,7 @@ object BiliBiliStreamInfoDataParser {
         return StreamInfo(
             url = "https://${BiliBiliLinks.LIVE_BASE_URL}/${data.requireLong("roomid")}",
             name = data.requireString("title"),
-            serviceId = "BILIBILI",
+            serviceId = 5,
             thumbnailUrl = thumbnailUrl.replace("http:", "https:"),
             isLive = true,
             viewCount = data.requireObject("watched_show").requireLong("num"),
@@ -154,7 +154,7 @@ object BiliBiliStreamInfoDataParser {
                     .replace("<em class=\"keyword\">", "")
                     .replace("</em>", "")
             },
-            serviceId = "BILIBILI",
+            serviceId = 5,
             thumbnailUrl = data.requireString("cover").replace("http:", "https:"),
             duration = data.requireLong("duration") / 1000,
             uploaderName = data.requireString("org_title")
@@ -180,7 +180,7 @@ object BiliBiliStreamInfoDataParser {
         return StreamInfo(
             url = url,
             name = name,
-            serviceId = "BILIBILI",
+            serviceId = 5,
             thumbnailUrl = if (type == 1) {
                 item.requireString("cover_from_user")
             } else {
@@ -211,7 +211,7 @@ object BiliBiliStreamInfoDataParser {
         StreamInfo(
             url = "${BiliBiliLinks.VIDEO_BASE_URL}$bvid?p=1",
             name = item.requireString("title"),
-            serviceId = "BILIBILI",
+            serviceId = 5,
             thumbnailUrl = item.requireString("cover").replace("http:", "https:"),
             duration = try {
                 item.requireLong("duration")
@@ -237,7 +237,7 @@ object BiliBiliStreamInfoDataParser {
         return StreamInfo(
             url = BiliBiliLinks.VIDEO_BASE_URL + item.requireString("bvid") + "?p=1",
             name = item.requireString("title"),
-            serviceId = "BILIBILI",
+            serviceId = 5,
             thumbnailUrl = item.requireString("pic").replace("http:", "https:"),
             duration = try {
                 item.requireLong("duration")

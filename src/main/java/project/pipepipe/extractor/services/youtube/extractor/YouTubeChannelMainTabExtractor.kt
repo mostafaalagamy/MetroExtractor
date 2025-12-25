@@ -127,7 +127,7 @@ class YouTubeChannelMainTabExtractor(
                 info = ChannelInfo(
                     url = result.requireString("/metadata/channelMetadataRenderer/channelUrl"),
                     name = name,
-                    serviceId = "YOUTUBE",
+                    serviceId = 0,
                     thumbnailUrl = result.requireArray("/metadata/channelMetadataRenderer/avatar/thumbnails").last().requireString("url"),
                     bannerUrl = runCatching{ result.requireArray("/header/pageHeaderRenderer/content/pageHeaderViewModel/banner/imageBannerViewModel/image/sources").last().requireString("url") }.getOrNull(),
                     description = result.requireString("/metadata/channelMetadataRenderer/description"),
