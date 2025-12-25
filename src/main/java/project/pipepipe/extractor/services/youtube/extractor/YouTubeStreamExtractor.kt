@@ -3,6 +3,7 @@ package project.pipepipe.extractor.services.youtube.extractor
 import com.fasterxml.jackson.databind.JsonNode
 import project.pipepipe.extractor.Extractor
 import project.pipepipe.extractor.ExtractorContext.asJson
+import project.pipepipe.extractor.ExtractorContext.isLoggedInCookie
 import project.pipepipe.extractor.services.youtube.YouTubeDecryptionHelper
 import project.pipepipe.extractor.services.youtube.YouTubeDecryptionHelper.processAdaptiveFormats
 import project.pipepipe.extractor.services.youtube.YouTubeLinks.CHANNEL_URL
@@ -24,7 +25,6 @@ import project.pipepipe.extractor.services.youtube.dataparser.YouTubeStreamInfoD
 import project.pipepipe.extractor.utils.createMultiStreamDashManifest
 import project.pipepipe.extractor.utils.mixedNumberWordToLong
 import project.pipepipe.extractor.utils.parseMediaType
-import project.pipepipe.shared.downloader.isLoggedInCookie
 import project.pipepipe.shared.infoitem.RelatedItemInfo
 import project.pipepipe.shared.infoitem.StreamInfo
 import project.pipepipe.shared.infoitem.helper.stream.*

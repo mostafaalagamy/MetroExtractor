@@ -16,6 +16,7 @@ object ExtractorContext {
     })
     val objectMapper = ObjectMapper()
     fun String.asJson(): JsonNode = objectMapper.readTree(this)
+    fun String.isLoggedInCookie(): Boolean = this.contains("is_logged_in=1")
 
 
 

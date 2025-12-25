@@ -13,9 +13,9 @@ import project.pipepipe.extractor.services.niconico.NicoNicoUrlParser.parseStrea
 import project.pipepipe.shared.state.State
 import project.pipepipe.shared.state.StreamExtractState
 import project.pipepipe.extractor.ExtractorContext.asJson
+import project.pipepipe.extractor.ExtractorContext.isLoggedInCookie
 import project.pipepipe.extractor.services.niconico.NicoNicoLinks.RELATED_VIDEO_URL
 import project.pipepipe.extractor.services.niconico.NicoNicoLinks.USER_URL
-import project.pipepipe.shared.downloader.isLoggedInCookie
 import project.pipepipe.shared.utils.json.requireArray
 import project.pipepipe.shared.utils.json.requireBoolean
 import project.pipepipe.shared.utils.json.requireLong
