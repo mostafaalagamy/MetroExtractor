@@ -25,6 +25,7 @@ class YouTubeTrendingExtractor(
         cookie: String?
     ): JobStepResult {
         val type = getQueryValue(url, "name")
+        val country = getQueryValue(url, "country")!!
 
         if (currentState == null) {
             return JobStepResult.ContinueWith(
@@ -34,7 +35,7 @@ class YouTubeTrendingExtractor(
                             RequestMethod.POST,
                             BROWSE_URL,
                             WEB_HEADER,
-                            getTrendingInfoBody("UC4R8DWoMoI7CAwX8_LjQHig")
+                            getTrendingInfoBody("UC4R8DWoMoI7CAwX8_LjQHig", country)
                         )
                     )
                 ), PlainState(1)
