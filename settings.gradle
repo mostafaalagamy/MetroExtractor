@@ -23,12 +23,8 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        // 本地 Maven 仓库，用于依赖 shared
-        maven {
-            url = uri("${settings.rootDir}/../local-maven")
-        }
+        maven { url 'https://jitpack.io' }
     }
 }
 
 rootProject.name = 'extractor'
-includeBuild '../shared'
