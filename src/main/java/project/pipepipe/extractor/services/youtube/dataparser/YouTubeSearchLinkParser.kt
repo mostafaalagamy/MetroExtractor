@@ -3,6 +3,7 @@ package project.pipepipe.extractor.services.youtube.dataparser
 import okio.ByteString.Companion.toByteString
 import project.pipepipe.extractor.ExtractorContext.objectMapper
 import project.pipepipe.extractor.services.youtube.YouTubeRequestHelper.DESKTOP_CONTEXT
+import project.pipepipe.extractor.services.youtube.YouTubeRequestHelper.DESKTOP_CONTEXT_ZULU
 import project.pipepipe.extractor.services.youtube.YouTubeRequestHelper.getContinuationBody
 import project.pipepipe.extractor.services.youtube.dataparser.SpGenerator.UTF_8
 import project.pipepipe.extractor.services.youtube.search.filter.protobuf.DateFilter
@@ -158,11 +159,12 @@ object YouTubeSearchLinkParser {
     fun getSearchBody(rawUrl: String): String = runCatching {
         val url = URI(rawUrl)
         val queryParams = parseQuery(url.query)
+        val isSearchingVideo = queryParams.get("type") == "video"
         return if (queryParams.contains("continuation")) {
-            getContinuationBody(queryParams["continuation"]!!)
+            getContinuationBody(queryParams["continuation"]!!, useZuluTrick = isSearchingVideo)
         } else {
             objectMapper.writeValueAsString(mapOf(
-                "context" to DESKTOP_CONTEXT,
+                "context" to if (isSearchingVideo)DESKTOP_CONTEXT_ZULU else DESKTOP_CONTEXT,
                 "query" to queryParams["query"],
                 "params" to SpGenerator.from(FilterMapper.mapFrom(queryParams))
             ))

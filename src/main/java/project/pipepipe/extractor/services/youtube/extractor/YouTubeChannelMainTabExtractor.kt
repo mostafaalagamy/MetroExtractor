@@ -85,7 +85,7 @@ class YouTubeChannelMainTabExtractor(
             result.requireArray("/contents/twoColumnBrowseResultsRenderer/tabs").forEach {
                 val id = runCatching { it.requireString("/tabRenderer/endpoint/browseEndpoint/browseId") }.getOrNull()
                 when (runCatching{ it.requireString("/tabRenderer/title") }.getOrNull()) {
-                     "Videos" -> {
+                     "Videos", "Amavidiyo" -> {
                          tabs.add(ChannelTabInfo(
                              url = "$TAB_RAW_URL?id=$id&type=videos&name=$nameEncoded",
                              type = ChannelTabType.VIDEOS
@@ -103,19 +103,19 @@ class YouTubeChannelMainTabExtractor(
                              nextPageUrl = "$TAB_RAW_URL?id=$id&type=videos&continuation=$it&name=$nameEncoded"
                          }
                      }
-                    "Shorts" -> {
+                    "Shorts", "Ama-Short" -> {
                         tabs.add(ChannelTabInfo(
                             url = "$TAB_RAW_URL?id=$id&type=shorts&name=$nameEncoded",
                             type = ChannelTabType.SHORTS
                         ))
                     }
-                    "Live" -> {
+                    "Live", "Bukhoma" -> {
                         tabs.add(ChannelTabInfo(
                             url = "$TAB_RAW_URL?id=$id&type=live&name=$nameEncoded",
                             type = ChannelTabType.LIVE
                         ))
                     }
-                    "Playlists" -> {
+                    "Playlists", "Uhlu lwadlalwayo" -> {
                         tabs.add(ChannelTabInfo(
                             url = "$TAB_RAW_URL?id=$id&type=playlists&name=$nameEncoded",
                             type = ChannelTabType.PLAYLISTS
@@ -134,7 +134,9 @@ class YouTubeChannelMainTabExtractor(
                     subscriberCount = safeGet{
                         parseNumberWithSuffix(
                             result.requireArray("/header/pageHeaderRenderer/content/pageHeaderViewModel/metadata/contentMetadataViewModel/metadataRows")
-                                .first { it.requireString("/metadataParts/0/text/content").contains("subscribers") }
+                                .first { it.requireString("/metadataParts/0/text/content").let {
+                                    it.contains("subscribers", ignoreCase = true) || it.contains("ababhalisile", ignoreCase = true)
+                                } }
                                 .requireString("/metadataParts/0/text/content")
                         )
                     },

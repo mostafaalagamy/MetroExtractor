@@ -21,9 +21,13 @@ object YouTubeStreamInfoDataParser {
         if (data.requireObject("videoRenderer").has("upcomingEventData")) throw IgnoreException()
         val isLive = when {
             runCatching { data.requireString("/videoRenderer/badges/0/metadataBadgeRenderer/style") }.getOrNull() == "BADGE_STYLE_TYPE_LIVE_NOW" -> true
-            runCatching{ data.requireString("/videoRenderer/badges/0/metadataBadgeRenderer/label") }.getOrNull()?.startsWith("LIVE") == true -> true
+            runCatching{ data.requireString("/videoRenderer/badges/0/metadataBadgeRenderer/icon/iconType") }.getOrNull()?.startsWith("LIVE") == true -> true
             else -> runCatching {
-                data.requireObject("/videoRenderer/viewCountText").toString().contains(" watching")
+                data.requireObject("/videoRenderer/viewCountText")
+                    .toString()
+                    .let {
+                        it.contains(" watching", ignoreCase = true) || it.contains("bukele", ignoreCase = true)
+                    }
             }.getOrDefault(false)
         }
 
@@ -78,11 +82,11 @@ object YouTubeStreamInfoDataParser {
                 runs.forEach { run ->
                     val text = runCatching{ run.requireString("text") }.getOrNull() ?: return@forEach
 
-                    if (viewCount == null && text.contains("view", ignoreCase = true)) {
+                    if (viewCount == null && (text.contains("view", ignoreCase = true) || text.contains("ukubukwa", ignoreCase = true))) {
                         viewCount = text.extractDigitsAsLong()
                     }
 
-                    if (uploadDate == null && text.contains("ago", ignoreCase = true)) {
+                    if (uploadDate == null && text.contains("ago", ignoreCase = true) || text.endsWith("dlule", ignoreCase = true)) {
                         uploadDate = runCatching { TimeAgoParser.parseToTimestamp(text) }.getOrNull()
                     }
                 }
@@ -122,12 +126,12 @@ object YouTubeStreamInfoDataParser {
         }
 
         // analyze
-        val isLive = allMetadataTexts.any { it.contains("watching", ignoreCase = true) }
-        val uploadDate = allMetadataTexts.firstOrNull { it.contains("ago", ignoreCase = true) }?.let {
+        val isLive = allMetadataTexts.any { it.contains("watching", ignoreCase = true) || it.contains("bukele", ignoreCase = true) }
+        val uploadDate = allMetadataTexts.firstOrNull { it.contains("ago", ignoreCase = true) || it.endsWith("dlule", ignoreCase = true) }?.let {
             TimeAgoParser.parseToTimestamp(it)
         }
         val viewCount = allMetadataTexts.firstOrNull {
-            it.contains("view", ignoreCase = true)
+            it.contains("view", ignoreCase = true) || it.contains("ukubukwa", ignoreCase = true)
         }?.let {
             runCatching { mixedNumberWordToLong(it) }.getOrNull()
         }

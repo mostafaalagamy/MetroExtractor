@@ -45,6 +45,10 @@ object YouTubeRequestHelper {
         )
     )
 
+    val DESKTOP_CONTEXT_ZULU = DESKTOP_CONTEXT.toMutableMap().apply {
+        this["client"] = (this["client"] as Map<String, Any>) + ("hl" to "zu")
+    }
+
     val TV_CONTEXT = mapOf(
         "client" to mapOf(
             "utcOffsetMinutes" to 0,
@@ -134,7 +138,10 @@ object YouTubeRequestHelper {
                 ChannelTabType.PLAYLISTS -> "EglwbGF5bGlzdHPyBgQKAkIA"
                 else -> throw IllegalArgumentException()
             },
-            "context" to DESKTOP_CONTEXT,
+            "context" to when(type) {
+                ChannelTabType.VIDEOS, ChannelTabType.SHORTS, ChannelTabType.LIVE -> DESKTOP_CONTEXT_ZULU
+                else -> DESKTOP_CONTEXT
+            },
             "browseId" to id
         )
         return objectMapper.writeValueAsString(bodyMap)
@@ -149,9 +156,9 @@ object YouTubeRequestHelper {
         return objectMapper.writeValueAsString(bodyMap)
     }
 
-    fun getContinuationBody(continuation: String): String {
+    fun getContinuationBody(continuation: String, useZuluTrick: Boolean = false): String {
         return objectMapper.writeValueAsString(mapOf(
-            "context" to DESKTOP_CONTEXT,
+            "context" to if (useZuluTrick) DESKTOP_CONTEXT_ZULU else DESKTOP_CONTEXT,
             "continuation" to continuation
         ))
     }

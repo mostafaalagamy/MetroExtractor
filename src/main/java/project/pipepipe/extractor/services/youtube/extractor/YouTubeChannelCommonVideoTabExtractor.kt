@@ -101,7 +101,7 @@ class YouTubeChannelCommonVideoTabExtractor(
                             RequestMethod.POST,
                             BROWSE_URL,
                             WEB_HEADER,
-                            getContinuationBody(getQueryValue(url, "continuation")!!)
+                            getContinuationBody(getQueryValue(url, "continuation")!!, useZuluTrick = getQueryValue(url, "type") != "playlists")
                         )
                     )
                 ), PlainState(1)

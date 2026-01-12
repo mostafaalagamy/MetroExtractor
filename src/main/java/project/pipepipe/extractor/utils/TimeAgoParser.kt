@@ -8,24 +8,46 @@ import java.util.regex.Pattern
 object TimeAgoParser {
 
     private val TIME_PATTERNS = mapOf(
-        ChronoUnit.SECONDS to listOf("second", "seconds", "sec", "secs"),
-        ChronoUnit.MINUTES to listOf("minute", "minutes", "min", "mins"),
-        ChronoUnit.HOURS to listOf("hour", "hours", "hr", "hrs"),
-        ChronoUnit.DAYS to listOf("day", "days"),
-        ChronoUnit.WEEKS to listOf("week", "weeks"),
-        ChronoUnit.MONTHS to listOf("month", "months"),
-        ChronoUnit.YEARS to listOf("year", "years")
+        ChronoUnit.SECONDS to listOf(
+            "second", "seconds", "sec", "secs",
+            "umzuzwana", "imizuzwana", "amasekhondi", "isekhondi", "emasekhondini", "emizuzwaneni" // Zulu
+        ),
+        ChronoUnit.MINUTES to listOf(
+            "minute", "minutes", "min", "mins",
+            "umzuzu", "imizuzu", "amaminithi", "iminithi", "emaminithini", "emizuzwini"       // Zulu
+        ),
+        ChronoUnit.HOURS to listOf(
+            "hour", "hours", "hr", "hrs",
+            "ihora", "amahora", "emahoreni"        // Zulu
+        ),
+        ChronoUnit.DAYS to listOf(
+            "day", "days",
+            "usuku", "izinsuku", "osukwini", "ezinsukwini"       // Zulu
+        ),
+        ChronoUnit.WEEKS to listOf(
+            "week", "weeks",
+            "iviki", "amaviki", "isonto", "amasonto", "emavikini", "emasontweni"        // Zulu
+        ),
+        ChronoUnit.MONTHS to listOf(
+            "month", "months",
+            "inyanga", "izinyanga", "ezinyangeni"    // Zulu
+        ),
+        ChronoUnit.YEARS to listOf(
+            "year", "years",
+            "unyaka", "iminyaka", "eminyakeni"      // Zulu
+        )
     )
 
     private val SPECIAL_CASES = mapOf(
+        // English
         "now" to (ChronoUnit.SECONDS to 0),
         "just now" to (ChronoUnit.SECONDS to 0),
         "a moment ago" to (ChronoUnit.SECONDS to 30),
         "yesterday" to (ChronoUnit.DAYS to 1),
-        "a second ago" to (ChronoUnit.SECONDS to 1),
-        "a minute ago" to (ChronoUnit.MINUTES to 1),
-        "an hour ago" to (ChronoUnit.HOURS to 1),
-        "a day ago" to (ChronoUnit.DAYS to 1)
+
+        // Zulu
+        "manje" to (ChronoUnit.SECONDS to 0), // now
+        "izolo" to (ChronoUnit.DAYS to 1)     // yesterday
     )
 
     /**
@@ -49,7 +71,6 @@ object TimeAgoParser {
             ChronoUnit.YEARS -> now.minusYears(amount.toLong()).minusDays(1)
             else -> now.minus(amount.toLong(), unit)
         }
-
         return resultDateTime.toInstant().toEpochMilli()
     }
 
