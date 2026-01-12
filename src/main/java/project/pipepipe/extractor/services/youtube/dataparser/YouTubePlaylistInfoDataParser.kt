@@ -38,4 +38,33 @@ object YouTubePlaylistInfoDataParser {
             uploaderUrl = uploaderUrl,
         )
     }
+
+    fun parseFromMusicResponsiveListItemRenderer(data: JsonNode): PlaylistInfo {
+        val flexColumns = data.requireArray("/musicResponsiveListItemRenderer/flexColumns")
+        val playlistId = data.requireString("/musicResponsiveListItemRenderer/overlay/musicItemThumbnailOverlayRenderer/content/musicPlayButtonRenderer/playNavigationEndpoint/watchPlaylistEndpoint/playlistId")
+
+        val name = flexColumns[0].requireString("/musicResponsiveListItemFlexColumnRenderer/text/runs/0/text")
+
+        val uploaderInfo = flexColumns[1].requireArray("/musicResponsiveListItemFlexColumnRenderer/text/runs")
+            .find { it.has("navigationEndpoint") }
+        val uploaderName = uploaderInfo?.requireString("text")
+        val uploaderUrl = uploaderInfo?.path("navigationEndpoint")?.let {
+            runCatching {
+                CHANNEL_URL + it.requireString("/browseEndpoint/browseId")
+            }.getOrNull()
+        }
+
+        val thumbnailUrl = data.requireArray("/musicResponsiveListItemRenderer/thumbnail/musicThumbnailRenderer/thumbnail/thumbnails")
+            .last().requireString("url")
+
+        return PlaylistInfo(
+            thumbnailUrl = thumbnailUrl,
+            streamCount = -1,
+            url = PLAYLIST_BASE_URL + playlistId,
+            serviceId = 0,
+            name = name,
+            uploaderName = uploaderName,
+            uploaderUrl = uploaderUrl,
+        )
+    }
 }

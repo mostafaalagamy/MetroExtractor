@@ -12,6 +12,7 @@ object YouTubeRequestHelper {
     const val ANDROID_UA = "com.google.android.youtube/19.28.35 (Linux; U; Android 15; GB) gzip"
     const val WEB_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0"
     const val WEB_CLIENT_VERSION = "2.20251207.11.00"
+    const val MUSIC_CLIENT_VERSION = "1.20250122.01.00"
     const val TV_CLIENT_VERSION = "7.20250923.13.00"
     val ANDROID_HEADER = mapOf(
         "User-Agent" to ANDROID_UA,
@@ -48,6 +49,24 @@ object YouTubeRequestHelper {
     val DESKTOP_CONTEXT_ZULU = DESKTOP_CONTEXT.toMutableMap().apply {
         this["client"] = (this["client"] as Map<String, Any>) + ("hl" to "zu")
     }
+
+    val DESKTOP_CONTEXT_MUSIC = mapOf(
+        "request" to mapOf(
+            "internalExperimentFlags" to emptyList<String>(),
+            "useSsl" to true
+        ),
+        "client" to mapOf(
+            "utcOffsetMinutes" to 0,
+            "hl" to "en-US",
+            "gl" to "US",
+            "clientName" to "WEB_REMIX",
+            "clientVersion" to MUSIC_CLIENT_VERSION,
+            "platform" to "DESKTOP"
+        ),
+        "user" to mapOf(
+            "lockedSafetyMode" to false
+        )
+    )
 
     val TV_CONTEXT = mapOf(
         "client" to mapOf(

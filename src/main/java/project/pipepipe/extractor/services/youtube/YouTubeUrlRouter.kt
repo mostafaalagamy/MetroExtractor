@@ -5,6 +5,7 @@ import project.pipepipe.extractor.services.youtube.YouTubeLinks.COMMENT_RAW_URL
 import project.pipepipe.extractor.services.youtube.YouTubeLinks.PLAYLIST_BASE_URL
 import project.pipepipe.extractor.services.youtube.YouTubeLinks.REPLY_RAW_URL
 import project.pipepipe.extractor.services.youtube.YouTubeLinks.SEARCH_RAW_URL
+import project.pipepipe.extractor.services.youtube.YouTubeLinks.SEARCH_MUSIC_RAW_URL
 import project.pipepipe.extractor.services.youtube.YouTubeLinks.TAB_RAW_URL
 import project.pipepipe.extractor.services.youtube.YouTubeLinks.TRENDING_RAW_URL
 import project.pipepipe.extractor.services.youtube.YouTubeUrlParser.parseStreamId
@@ -13,6 +14,7 @@ import project.pipepipe.extractor.services.youtube.extractor.YouTubeChannelCommo
 import project.pipepipe.extractor.services.youtube.extractor.YouTubeChannelMainTabExtractor
 import project.pipepipe.extractor.services.youtube.extractor.YouTubeChannelPlaylistTabExtractor
 import project.pipepipe.extractor.services.youtube.extractor.YouTubeCommentExtractor
+import project.pipepipe.extractor.services.youtube.extractor.YouTubeMusicSearchExtractor
 import project.pipepipe.extractor.services.youtube.extractor.YouTubePlaylistExtractor
 import project.pipepipe.extractor.services.youtube.extractor.YouTubeSearchExtractor
 import project.pipepipe.extractor.services.youtube.extractor.YouTubeStreamExtractor
@@ -27,6 +29,7 @@ object YouTubeUrlRouter {
             url.contains(TRENDING_RAW_URL) -> YouTubeTrendingExtractor(url)
             url.contains(PLAYLIST_BASE_URL) -> YouTubePlaylistExtractor(url)
             url.contains(SEARCH_RAW_URL) -> YouTubeSearchExtractor(url)
+            url.contains(SEARCH_MUSIC_RAW_URL) -> YouTubeMusicSearchExtractor(url)
             url.contains(TAB_RAW_URL) -> when {
                 getQueryValue(url, "type") == "videos" -> YouTubeChannelMainTabExtractor(url)
                 getQueryValue(url, "type") == "live" -> YouTubeChannelCommonVideoTabExtractor(url, ChannelTabType.LIVE)

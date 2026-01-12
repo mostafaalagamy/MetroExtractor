@@ -18,4 +18,18 @@ object YouTubeChannelInfoDataParser {
             subscriberCount = runCatching{ mixedNumberWordToLong(item.requireString("/channelRenderer/videoCountText/simpleText")) }.getOrNull(),
         )
     }
+
+    fun parseFromMusicResponsiveListItemRenderer(item: JsonNode): ChannelInfo {
+        return ChannelInfo(
+            url = CHANNEL_URL + item.requireString("/musicResponsiveListItemRenderer/navigationEndpoint/browseEndpoint/browseId"),
+            name = item.requireString("/musicResponsiveListItemRenderer/flexColumns/0/musicResponsiveListItemFlexColumnRenderer/text/runs/0/text"),
+            serviceId = 0,
+            thumbnailUrl = item.requireArray("/musicResponsiveListItemRenderer/thumbnail/musicThumbnailRenderer/thumbnail/thumbnails").last().requireString("url"),
+            description = null,
+            subscriberCount = runCatching {
+                val text = item.requireString("/musicResponsiveListItemRenderer/flexColumns/1/musicResponsiveListItemFlexColumnRenderer/text/runs/2/text")
+                mixedNumberWordToLong(text)
+            }.getOrNull(),
+        )
+    }
 }

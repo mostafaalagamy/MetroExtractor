@@ -26,6 +26,7 @@ object Router {
     fun getService(serviceId: Int) = when(serviceId) {
         5 -> ExtractorContext.ServiceList.BiliBili
         0 -> ExtractorContext.ServiceList.YouTube
+        10 -> ExtractorContext.ServiceList.YouTubeMusic
         6 -> ExtractorContext.ServiceList.NicoNico
         else -> throw IllegalArgumentException("Unknown service ID: $serviceId")
     }

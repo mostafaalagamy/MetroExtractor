@@ -182,6 +182,32 @@ object YouTubeStreamInfoDataParser {
         )
     }
 
+    fun parseFromMusicResponsiveListItemRenderer(data: JsonNode): StreamInfo {
+        val titleRuns = data.requireArray("/musicResponsiveListItemRenderer/flexColumns/0/musicResponsiveListItemFlexColumnRenderer/text/runs")
+        val secondColumnRuns = data.requireArray("/musicResponsiveListItemRenderer/flexColumns/1/musicResponsiveListItemFlexColumnRenderer/text/runs")
+
+        val videoId = data.requireString("/musicResponsiveListItemRenderer/playlistItemData/videoId")
+
+        return StreamInfo(
+            url = STREAM_URL + videoId,
+            serviceId = 0,
+            name = titleRuns[0].requireString("text"),
+            uploaderName = secondColumnRuns[0].requireString("text"),
+            uploaderUrl = runCatching {
+                CHANNEL_URL + secondColumnRuns[0].requireObject("/navigationEndpoint/browseEndpoint/browseId")
+            }.getOrNull(),
+            uploaderAvatarUrl = null,
+            thumbnailUrl = data.requireArray("/musicResponsiveListItemRenderer/thumbnail/musicThumbnailRenderer/thumbnail/thumbnails").last().requireString("url"),
+            duration = runCatching { parseDurationString(secondColumnRuns.last().requireString("text")) }.getOrNull(),
+            viewCount = runCatching {
+                data.requireArray("/musicResponsiveListItemRenderer/flexColumns/2/musicResponsiveListItemFlexColumnRenderer/text/runs")
+                    .firstOrNull { it.requireString("text").contains("play", ignoreCase = true) }
+                    ?.requireString("text")
+                    ?.let { mixedNumberWordToLong(it) }
+            }.getOrNull()
+        )
+    }
+
 
     private fun extractDuration(data: JsonNode): Long? {
         val paths = listOf(

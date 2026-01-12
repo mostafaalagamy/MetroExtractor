@@ -2,7 +2,9 @@ package project.pipepipe.extractor.services.youtube.dataparser
 
 import okio.ByteString.Companion.toByteString
 import project.pipepipe.extractor.ExtractorContext.objectMapper
+import project.pipepipe.extractor.services.youtube.YouTubeLinks.SEARCH_MUSIC_RAW_URL
 import project.pipepipe.extractor.services.youtube.YouTubeRequestHelper.DESKTOP_CONTEXT
+import project.pipepipe.extractor.services.youtube.YouTubeRequestHelper.DESKTOP_CONTEXT_MUSIC
 import project.pipepipe.extractor.services.youtube.YouTubeRequestHelper.DESKTOP_CONTEXT_ZULU
 import project.pipepipe.extractor.services.youtube.YouTubeRequestHelper.getContinuationBody
 import project.pipepipe.extractor.services.youtube.dataparser.SpGenerator.UTF_8
@@ -133,6 +135,15 @@ object SpGenerator {
         return finalSp
     }
 
+    fun hardCodeMap(filter: String): String = when (filter) {
+        "songs" -> "Eg-KAQwIARAAGAAgACgAMABqChAEEAUQAxAKEAk%3D"
+        "videos" -> "Eg-KAQwIABABGAAgACgAMABqChAEEAUQAxAKEAk%3D"
+        "albums" -> "Eg-KAQwIABAAGAEgACgAMABqChAEEAUQAxAKEAk%3D"
+        "playlists" -> "Eg-KAQwIABAAGAAgACgBMABqChAEEAUQAxAKEAk%3D"
+        "artists" -> "Eg-KAQwIABAAGAAgASgAMABqChAEEAUQAxAKEAk%3D"
+        else -> error("unexpected filter")
+    }
+
     private fun setFeatureState(feature: Features, state: Boolean, builder: Filters.Builder) {
         when (feature) {
             Features.is_hd -> builder.is_hd(state)
@@ -159,15 +170,30 @@ object YouTubeSearchLinkParser {
     fun getSearchBody(rawUrl: String): String = runCatching {
         val url = URI(rawUrl)
         val queryParams = parseQuery(url.query)
-        val isSearchingVideo = queryParams.get("type") == "video"
-        return if (queryParams.contains("continuation")) {
-            getContinuationBody(queryParams["continuation"]!!, useZuluTrick = isSearchingVideo)
+        val isMusicSearch = rawUrl.contains(SEARCH_MUSIC_RAW_URL)
+        val isSearchingVideo = queryParams.get("type") == "video" && !isMusicSearch
+        return if (isMusicSearch) {
+            if (queryParams.contains("continuation")) {
+                objectMapper.writeValueAsString(mapOf(
+                    "context" to DESKTOP_CONTEXT_MUSIC,
+                ))
+            } else {
+                objectMapper.writeValueAsString(mapOf(
+                    "context" to DESKTOP_CONTEXT_MUSIC,
+                    "query" to queryParams["query"],
+                    "params" to SpGenerator.hardCodeMap(queryParams["type"]!!)
+                ))
+            }
         } else {
-            objectMapper.writeValueAsString(mapOf(
-                "context" to if (isSearchingVideo)DESKTOP_CONTEXT_ZULU else DESKTOP_CONTEXT,
-                "query" to queryParams["query"],
-                "params" to SpGenerator.from(FilterMapper.mapFrom(queryParams))
-            ))
+            if (queryParams.contains("continuation")) {
+                getContinuationBody(queryParams["continuation"]!!, useZuluTrick = isSearchingVideo)
+            } else {
+                objectMapper.writeValueAsString(mapOf(
+                    "context" to if (isSearchingVideo)DESKTOP_CONTEXT_ZULU else DESKTOP_CONTEXT,
+                    "query" to queryParams["query"],
+                    "params" to SpGenerator.from(FilterMapper.mapFrom(queryParams))
+                ))
+            }
         }
     }.getOrElse {
         throw IllegalArgumentException("Invalid url: ${it.message}")

@@ -5,6 +5,7 @@ import project.pipepipe.extractor.StreamingService
 import project.pipepipe.extractor.base.CookieExtractor
 import project.pipepipe.extractor.services.youtube.YouTubeLinks.TRENDING_RAW_URL
 import project.pipepipe.extractor.services.youtube.YouTubeLinks.GET_SUGGESTION_URL
+import project.pipepipe.extractor.services.youtube.YouTubeLinks.SEARCH_MUSIC_RAW_URL
 import project.pipepipe.extractor.services.youtube.YouTubeLinks.SEARCH_RAW_URL
 import project.pipepipe.shared.infoitem.SupportedServiceInfo
 import project.pipepipe.shared.infoitem.TrendingInfo
@@ -16,10 +17,6 @@ import project.pipepipe.shared.job.Payload
 import project.pipepipe.shared.job.RequestMethod
 
 class YouTubeService(id: Int) : StreamingService(id)  {
-    companion object {
-
-    }
-
     override suspend fun getCookieExtractor(): CookieExtractor = CookieExtractor()
 
     override fun route(url: String): Extractor<*, *>? {
@@ -121,5 +118,36 @@ class YouTubeService(id: Int) : StreamingService(id)  {
                     "youtube\\.com/playlist\\?list="
                 )
             )
+        )
+}
+
+
+class YouTubeMusicService(id: Int) : StreamingService(id)  {
+    override suspend fun getCookieExtractor(): CookieExtractor = CookieExtractor()
+
+    override fun route(url: String): Extractor<*, *>? {
+        return YouTubeUrlRouter.route(url)
+    }
+
+    override val serviceInfo: SupportedServiceInfo
+        get() = SupportedServiceInfo(
+            serviceId = 10,
+            serviceName = "YouTube Music",
+            suggestionPayload = Payload(
+                RequestMethod.GET,
+                GET_SUGGESTION_URL
+            ),
+            suggestionStringPath = Pair("/1", "/0"),
+            suggestionJsonBetween = Pair("JP(", ")"),
+            availableSearchTypes = listOf(
+                SearchType("songs", "$SEARCH_MUSIC_RAW_URL?type=songs&query=",),
+                SearchType("videos", "$SEARCH_MUSIC_RAW_URL?type=videos&query="),
+                SearchType("albums", "$SEARCH_MUSIC_RAW_URL?type=albums&query="),
+                SearchType("playlists", "$SEARCH_MUSIC_RAW_URL?type=playlists&query="),
+                SearchType("artists", "$SEARCH_MUSIC_RAW_URL?type=artists&query="),
+            ),
+            trendingList = emptyList(),
+            themeColor = "#e53935",
+            urlPatterns = emptyMap()
         )
 }
