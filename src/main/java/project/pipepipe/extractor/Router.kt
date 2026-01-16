@@ -22,14 +22,8 @@ object Router {
         val content = this.substringAfter("://")
         return "$type://$content"
     }
-    fun getExtractor(url: String): Extractor<*, *>? = ExtractorContext.ServiceList.all.firstNotNullOfOrNull { it.route(url) }
-    fun getService(serviceId: Int) = when(serviceId) {
-        5 -> ExtractorContext.ServiceList.BiliBili
-        0 -> ExtractorContext.ServiceList.YouTube
-        10 -> ExtractorContext.ServiceList.YouTubeMusic
-        6 -> ExtractorContext.ServiceList.NicoNico
-        else -> throw IllegalArgumentException("Unknown service ID: $serviceId")
-    }
+    fun getExtractor(url: String): Extractor<*, *> = ExtractorContext.ServiceList.all.firstNotNullOf { it.route(url) }
+
     suspend fun route(request: JobRequest, sessionId: String, currentState: State?): JobStepResult {
         return when(request.jobType) {
             SupportedJobType.FETCH_INFO -> getExtractor(request.url!!)!!.fetchInfo(
@@ -52,7 +46,7 @@ object Router {
                 request.cookie
             )
             SupportedJobType.GET_SUGGESTION -> JobStepResult.CompleteWith(ExtractResult())
-            SupportedJobType.REFRESH_COOKIE -> getService(request.serviceId!!).getCookieExtractor()
+            SupportedJobType.REFRESH_COOKIE -> ExtractorContext.ServiceList.all.first{it.serviceId == request.serviceId!!}.getCookieExtractor()
                 .refreshCookie(sessionId, currentState, request.results)
             SupportedJobType.GET_SUPPORTED_SERVICES -> JobStepResult.CompleteWith(
                 ExtractResult(pagedData = PagedData(ExtractorContext.ServiceList.all.map { it.serviceInfo }, null)))

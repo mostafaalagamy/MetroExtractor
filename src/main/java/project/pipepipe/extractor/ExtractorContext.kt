@@ -6,6 +6,7 @@ import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import project.pipepipe.extractor.services.bilibili.BilibiliService
 import project.pipepipe.extractor.services.niconico.NicoNicoService
+import project.pipepipe.extractor.services.soundcloud.SoundCloudService
 import project.pipepipe.extractor.services.youtube.YouTubeMusicService
 import project.pipepipe.extractor.services.youtube.YouTubeService
 import project.pipepipe.shared.downloader.Downloader
@@ -24,9 +25,10 @@ object ExtractorContext {
     object ServiceList {
         val YouTube = YouTubeService(0)
         val YouTubeMusic = YouTubeMusicService(10)
+        val SoundCloud = SoundCloudService(1)
 //        val Bandcamp = BandcampService(4)
         val BiliBili = BilibiliService(5)
         val NicoNico = NicoNicoService(6)
-        val all = listOf(YouTube, YouTubeMusic, BiliBili, NicoNico )
+        val all = listOf(YouTube, YouTubeMusic, BiliBili, NicoNico, SoundCloud)
     }
 }
