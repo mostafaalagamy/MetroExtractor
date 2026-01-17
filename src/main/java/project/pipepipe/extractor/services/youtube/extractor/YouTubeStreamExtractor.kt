@@ -254,15 +254,18 @@ class YouTubeStreamExtractor(
                 else -> ANDROID_UA
             }
 
+            var thumbnailUrl = runCatching { nextData.requireArray("/contents/twoColumnWatchNextResults/results/results/contents/1/videoSecondaryInfoRenderer/owner/videoOwnerRenderer/thumbnail/thumbnails").last().requireString("url") }.getOrNull()
+            thumbnailUrl = thumbnailUrl?: safeGet { nextData.requireArray("/contents/twoColumnWatchNextResults/results/results/contents/1/videoSecondaryInfoRenderer/owner/videoOwnerRenderer/avatarStack/avatarStackViewModel/avatars").last().requireString("/avatarViewModel/image/sources/0/url") }
+
             val streamInfo = StreamInfo(
                 url = STREAM_URL + id,
                 serviceId = 0,
                 name =  playData.requireString("/videoDetails/title"),
-                uploaderName = nextData.requireString("/contents/twoColumnWatchNextResults/results/results/contents/1/videoSecondaryInfoRenderer/owner/videoOwnerRenderer/title/runs/0/text"),
+                uploaderName = playData.requireString("/videoDetails/author"),
                 uploadDate = safeGet { OffsetDateTime.parse(info.requireString("/microformat/playerMicroformatRenderer/uploadDate")).toInstant().toEpochMilli() },
                 viewCount = safeGet { playData.requireString("/videoDetails/viewCount").toLong() },
                 uploaderUrl = safeGet { CHANNEL_URL + playData.requireString("/videoDetails/channelId") },
-                uploaderAvatarUrl = safeGet { nextData.requireArray("/contents/twoColumnWatchNextResults/results/results/contents/1/videoSecondaryInfoRenderer/owner/videoOwnerRenderer/thumbnail/thumbnails").last().requireString("url") },
+                uploaderAvatarUrl = thumbnailUrl,
                 likeCount = safeGet { info.requireLong("/microformat/playerMicroformatRenderer/likeCount") },
                 uploaderSubscriberCount = safeGet { mixedNumberWordToLong(nextData.requireString("/contents/twoColumnWatchNextResults/results/results/contents/1/videoSecondaryInfoRenderer/owner/videoOwnerRenderer/subscriberCountText/simpleText")) },
                 streamSegments = null,
