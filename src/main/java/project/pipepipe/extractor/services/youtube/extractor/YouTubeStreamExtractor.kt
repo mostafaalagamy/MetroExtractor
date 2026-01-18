@@ -273,9 +273,6 @@ class YouTubeStreamExtractor(
                 thumbnailUrl = safeGet { playData.requireArray("/videoDetails/thumbnail/thumbnails").last().requireString("url") },
                 description = safeGet { Description(playData.requireString("/videoDetails/shortDescription"), PLAIN_TEXT) },
                 tags = safeGet{ playData.requireArray("/videoDetails/keywords").map { it.asText() } },
-                commentUrl = safeGet { "$COMMENT_RAW_URL?continuation=${nextData.requireArray("/contents/twoColumnWatchNextResults/results/results/contents").firstNotNullOfOrNull {
-                   runCatching { it.requireString("/itemSectionRenderer/contents/0/continuationItemRenderer/continuationEndpoint/continuationCommand/token") }.getOrNull()
-                }!!}" },
                 relatedItemUrl = "cache://${sessionId}",
                 headers = hashMapOf("User-Agent" to UA)
             ).apply {
@@ -347,6 +344,9 @@ class YouTubeStreamExtractor(
                             .filter { it.requireString("mimeType").startsWith("video") }[0].let {
                                 it.requireInt("width") < it.requireInt("height")
                             }
+                        commentUrl = safeGet { "$COMMENT_RAW_URL?continuation=${nextData.requireArray("/contents/twoColumnWatchNextResults/results/results/contents").firstNotNullOfOrNull {
+                            runCatching { it.requireString("/itemSectionRenderer/contents/0/continuationItemRenderer/continuationEndpoint/continuationCommand/token") }.getOrNull()
+                        }!!}" }
                     }
                     true -> {
                         this.isLive = true
