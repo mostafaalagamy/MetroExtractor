@@ -80,7 +80,17 @@ object Router {
                 currentState = request.state ?: throw IllegalStateException("Session ID provided but no state in request")
             }
 
-            when (val stepResult = route(request, sessionId, currentState)) {
+            val stepResult = try {
+                route(request, sessionId, currentState)
+            } catch (e: Exception) {
+                return JobResponse(
+                    sessionId = sessionId,
+                    status = JobStatus.FAILED,
+                    result = ExtractResult(fatalError = ErrorDetail("ROUTE_FAILED", e.stackTraceToString()))
+                )
+            }
+
+            when (stepResult) {
                 is JobStepResult.ContinueWith -> {
                     return JobResponse(
                         sessionId = sessionId,
