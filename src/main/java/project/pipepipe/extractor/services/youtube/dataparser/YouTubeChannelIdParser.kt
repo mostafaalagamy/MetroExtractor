@@ -1,66 +1,46 @@
 package project.pipepipe.extractor.services.youtube.dataparser
 
 import project.pipepipe.extractor.services.youtube.YouTubeUrlParser
-import project.pipepipe.extractor.utils.RequestHelper.stringToURI
 import java.util.regex.Pattern
 
 object YouTubeChannelIdParser {
-
-    private val EXCLUDED_SEGMENTS: Pattern = Pattern.compile(
+    private val EXCLUDED_SEGMENTS = Pattern.compile(
         "playlist|watch|attribution_link|watch_popup|embed|feed|select_site|account|reporthistory|redirect"
     )
 
     fun parseChannelId(url: String): String? {
-        val urlObj = stringToURI(url) ?: return null
+        // 调用封装好的统一判断逻辑
+        if (!YouTubeUrlParser.isAnyYouTubeVariant(url)) return null
 
-        if (!YouTubeUrlParser.isHTTP(urlObj) ||
-            !(YouTubeUrlParser.isYoutubeURL(urlObj) ||
-                    YouTubeUrlParser.isInvidiousURL(urlObj) ||
-                    YouTubeUrlParser.isHooktubeURL(urlObj))
-        ) {
-            return null
+        val path = YouTubeUrlParser.getPath(url)
+        val splitPath = if (path.isEmpty()) emptyList() else path.split('/')
+
+        // 处理 Handle (@username)
+        if (splitPath.isNotEmpty() && splitPath[0].startsWith("@")) {
+            return splitPath[0]
         }
 
-        var path = urlObj.path.removePrefix("/")
-        var splitPath = if (path.isEmpty()) emptyList() else path.split('/')
-
-        when {
-            isHandle(splitPath) -> {
-                // 直接返回 handle（包含 @）
-                return splitPath.first()
-            }
-            isCustomShortChannelUrl(splitPath) -> {
-                path = "c/$path"
-                splitPath = path.split('/')
-            }
+        // 处理短链接 c/ 格式
+        val effectiveSplit = if (isCustomShortChannelUrl(splitPath)) {
+            listOf("c", splitPath[0])
+        } else {
+            splitPath
         }
 
-        if (!(path.startsWith("user/") ||
-                    path.startsWith("channel/") ||
-                    path.startsWith("c/"))
-        ) {
-            return null
-        }
+        if (effectiveSplit.size < 2) return null
 
-        if (splitPath.size < 2) {
-            return null
-        }
+        val prefix = effectiveSplit[0]
+        val id = effectiveSplit[1]
 
-        val id = splitPath[1]
-        if (id.isBlank()) {
-            return null
+        return when (prefix) {
+            "user", "channel", "c" -> if (id.isNotBlank()) id else null
+            else -> null
         }
-
-        return id
     }
 
     private fun isCustomShortChannelUrl(segments: List<String>): Boolean {
         return segments.size == 1 &&
                 segments[0].isNotEmpty() &&
                 !EXCLUDED_SEGMENTS.matcher(segments[0]).matches()
-    }
-
-    private fun isHandle(segments: List<String>): Boolean {
-        return segments.isNotEmpty() && segments[0].startsWith("@")
     }
 }

@@ -1,11 +1,10 @@
 package project.pipepipe.extractor.services.youtube
 
 import project.pipepipe.extractor.services.youtube.dataparser.YouTubeStreamIdParser
-import java.net.URI
 import java.util.Locale
 
 object YouTubeUrlParser {
-    val GOOGLE_URLS = setOf("google.", "m.google.", "www.google.")
+    val YOUTUBE_URLS = setOf("youtube.com", "www.youtube.com", "m.youtube.com", "music.youtube.com")
     val INVIDIOUS_URLS = setOf(
         "invidio.us", "dev.invidio.us", "www.invidio.us", "redirect.invidious.io",
         "invidious.snopyta.org", "yewtu.be", "tube.connect.cafe", "tubus.eduvid.org",
@@ -16,34 +15,50 @@ object YouTubeUrlParser {
         "inv.riverside.rocks", "invidious.blamefran.net", "y.com.cm", "invidious.moomoo.me",
         "yt.cyberhost.uk"
     )
-    val YOUTUBE_URLS = setOf("youtube.com", "www.youtube.com", "m.youtube.com", "music.youtube.com")
 
-
-    fun isYoutubeURL(url: URI): Boolean {
-        return YOUTUBE_URLS.contains(url.host.lowercase(Locale.ROOT))
+    fun getHost(url: String): String {
+        var host = url.lowercase(Locale.ROOT).substringAfter("://").substringBefore('/')
+        return host.substringBefore(':')
     }
 
-    fun isYoutubeServiceURL(url: URI): Boolean {
-        val host = url.host
-        return host.equals("www.youtube-nocookie.com", ignoreCase = true) ||
-                host.equals("youtu.be", ignoreCase = true)
+    /**
+     * 获取路径，移除开头的 '/'
+     */
+    fun getPath(url: String): String {
+        val withoutScheme = url.substringAfter("://")
+        if (!withoutScheme.contains('/')) return ""
+        return withoutScheme.substringAfter('/').substringBefore('?').substringBefore('#')
     }
 
-    fun isHooktubeURL(url: URI): Boolean {
-        return url.host.equals("hooktube.com", ignoreCase = true)
+    /**
+     * 简单的查询参数获取工具
+     */
+    fun getParam(url: String, key: String): String? {
+        val query = url.substringAfter('?', "")
+        if (query.isEmpty()) return null
+        return query.split('&')
+            .map { it.split('=') }
+            .firstOrNull { it.size >= 2 && it[0] == key }
+            ?.get(1)
     }
 
-    fun isInvidiousURL(url: URI): Boolean {
-        return INVIDIOUS_URLS.contains(url.host.lowercase(Locale.ROOT))
+    fun isHTTP(url: String): Boolean {
+        val low = url.lowercase(Locale.ROOT)
+        return low.startsWith("http://") || low.startsWith("https://")
     }
 
-    fun isY2ubeURL(url: URI): Boolean {
-        return url.host.equals("y2u.be", ignoreCase = true)
-    }
-
-    fun isHTTP(url: URI): Boolean {
-        val protocol = url.scheme.lowercase(Locale.ROOT)
-        return protocol == "http" || protocol == "https"
+    /**
+     * 合并之前愚蠢的逻辑判断
+     */
+    fun isAnyYouTubeVariant(url: String): Boolean {
+        if (!isHTTP(url)) return false
+        val host = getHost(url)
+        return YOUTUBE_URLS.contains(host) ||
+                INVIDIOUS_URLS.contains(host) ||
+                host == "youtu.be" ||
+                host == "y2u.be" ||
+                host == "hooktube.com" ||
+                host == "www.youtube-nocookie.com"
     }
 
     fun parseStreamId(url: String): String? {
