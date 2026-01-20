@@ -17,6 +17,8 @@ object NicoNicoLinks {
     const val MOBILE_SERIES_URL = "https://sp.nicovideo.jp/series/"
     const val USER_MYLIST_BASE_URL = "https://www.nicovideo.jp/user/"
     const val TAB_RAW_URL = "tab://niconico.raw"
+    const val DANMAKU_RAW_URL = "danmaku://niconico.raw"
+    const val DANMAKU_API_URL = "https://public.nvcomment.nicovideo.jp/v1/threads"
     fun getAccessUrl(id: String, trackId: String) = "https://nvapi.nicovideo.jp/v1/watch/${id}/access-rights/hls?actionTrackId=$trackId"
     fun getUserMylistUrl(userId: String, mylistId: String) = "${USER_MYLIST_BASE_URL}${userId}/mylist/${mylistId}"
 }

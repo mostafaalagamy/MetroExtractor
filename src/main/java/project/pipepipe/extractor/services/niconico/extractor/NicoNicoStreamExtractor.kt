@@ -14,6 +14,7 @@ import project.pipepipe.shared.state.State
 import project.pipepipe.shared.state.StreamExtractState
 import project.pipepipe.extractor.ExtractorContext.asJson
 import project.pipepipe.extractor.ExtractorContext.isLoggedInCookie
+import project.pipepipe.extractor.services.niconico.NicoNicoLinks.DANMAKU_RAW_URL
 import project.pipepipe.extractor.services.niconico.NicoNicoLinks.RELATED_VIDEO_URL
 import project.pipepipe.extractor.services.niconico.NicoNicoLinks.USER_URL
 import project.pipepipe.shared.utils.json.requireArray
@@ -26,6 +27,8 @@ import project.pipepipe.shared.job.*
 import project.pipepipe.shared.state.PlainState
 import java.time.ZonedDateTime
 import project.pipepipe.shared.job.ErrorDetail
+import project.pipepipe.shared.utils.json.requireObject
+import java.net.URLEncoder
 
 
 class NicoNicoStreamExtractor(
@@ -195,7 +198,8 @@ class NicoNicoStreamExtractor(
                 description = safeGet { Description(watchData.requireString("/data/response/video/description"),
                     Description.HTML) },
                 tags = safeGet { watchData.requireArray("/data/response/tag/items").map { it.requireString("name") } },
-                relatedItemUrl = RELATED_VIDEO_URL + id
+                relatedItemUrl = RELATED_VIDEO_URL + id,
+                danmakuUrl = safeGet{ "$DANMAKU_RAW_URL?data=${URLEncoder.encode(watchData.requireObject("/data/response/comment/nvComment").toString(), "UTF-8")}" }
             )
             val audioId = watchData.requireArray("/data/response/media/domand/audios")
                 .first { it.requireBoolean("isAvailable") }.requireString("id")

@@ -2,6 +2,7 @@ package project.pipepipe.extractor.services.niconico
 
 import project.pipepipe.extractor.Extractor
 import project.pipepipe.extractor.services.niconico.NicoNicoLinks.CHANNEL_URL
+import project.pipepipe.extractor.services.niconico.NicoNicoLinks.DANMAKU_RAW_URL
 import project.pipepipe.extractor.services.niconico.NicoNicoLinks.PLAYLIST_SEARCH_API_URL
 import project.pipepipe.extractor.services.niconico.NicoNicoLinks.RELATED_VIDEO_URL
 import project.pipepipe.extractor.services.niconico.NicoNicoLinks.SEARCH_URL
@@ -14,6 +15,7 @@ import project.pipepipe.extractor.services.niconico.extractor.NicoNicoChannelAlb
 import project.pipepipe.extractor.services.niconico.extractor.NicoNicoChannelLiveTabExtractor
 import project.pipepipe.extractor.services.niconico.extractor.NicoNicoChannelMainTabExtractor
 import project.pipepipe.extractor.services.niconico.extractor.NicoNicoChannelPlaylistTabExtractor
+import project.pipepipe.extractor.services.niconico.extractor.NicoNicoDanmakuExtractor
 import project.pipepipe.extractor.services.niconico.extractor.NicoNicoPlaylistExtractor
 import project.pipepipe.extractor.services.niconico.extractor.NicoNicoPlaylistSearchExtractor
 import project.pipepipe.extractor.services.niconico.extractor.NicoNicoRelatedVideoExtractor
@@ -43,6 +45,7 @@ object NicoNicoUrlRouter {
             url.contains(CHANNEL_URL) -> NicoNicoChannelMainTabExtractor(url)
             url.contains(RELATED_VIDEO_URL) -> NicoNicoRelatedVideoExtractor(url)
             url.contains(TRENDING_RAW_URL) -> NicoNicoTrendingExtractor(url)
+            url.contains(DANMAKU_RAW_URL) -> NicoNicoDanmakuExtractor(url)
             else -> null
         }
     }
