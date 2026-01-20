@@ -8,10 +8,10 @@ import project.pipepipe.extractor.services.youtube.YouTubeLinks.STREAM_URL
 import project.pipepipe.extractor.utils.TimeAgoParser
 import project.pipepipe.extractor.utils.extractDigitsAsLong
 import project.pipepipe.extractor.utils.mixedNumberWordToLong
-import project.pipepipe.shared.utils.json.requireArray
-import project.pipepipe.shared.utils.json.requireString
 import project.pipepipe.shared.infoitem.StreamInfo
+import project.pipepipe.shared.utils.json.requireArray
 import project.pipepipe.shared.utils.json.requireObject
+import project.pipepipe.shared.utils.json.requireString
 
 object YouTubeStreamInfoDataParser {
     fun parseFromVideoRenderer(data: JsonNode, overrideChannelName: String? = null, overrideChannelId: String? = null): StreamInfo {
@@ -22,6 +22,7 @@ object YouTubeStreamInfoDataParser {
         val isLive = when {
             runCatching { data.requireString("/videoRenderer/badges/0/metadataBadgeRenderer/style") }.getOrNull() == "BADGE_STYLE_TYPE_LIVE_NOW" -> true
             runCatching{ data.requireString("/videoRenderer/badges/0/metadataBadgeRenderer/icon/iconType") }.getOrNull()?.startsWith("LIVE") == true -> true
+            runCatching { data.requireString("/videoRenderer/thumbnailOverlays/0/thumbnailOverlayTimeStatusRenderer/icon/iconType") }.getOrNull()?.startsWith("LIVE") == true -> true
             else -> runCatching {
                 data.requireObject("/videoRenderer/viewCountText")
                     .toString()
