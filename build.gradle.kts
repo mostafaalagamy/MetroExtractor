@@ -15,7 +15,7 @@ plugins {
     id("maven-publish")
 }
 
-version = "5.0.0-beta4"
+version = "5.0.0-rc"
 group = "project.pipepipe"
 
 wire {
@@ -24,7 +24,7 @@ wire {
 }
 
 dependencies {
-    implementation("project.pipepipe:shared:5.0.0-beta3")
+    implementation("project.pipepipe:shared:5.0.0-rc")
 
     implementation("org.jsoup:jsoup:1.21.1")
     implementation("com.fasterxml.jackson.core:jackson-core:2.20.0")
