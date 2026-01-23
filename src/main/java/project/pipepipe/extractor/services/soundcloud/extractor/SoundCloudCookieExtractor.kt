@@ -79,7 +79,7 @@ class SoundCloudCookieExtractor : CookieExtractor() {
             }
 
             val clientId = clientIdMatcher.group(1)
-            val oneDayInMillis = 24 * 60 * 60 * 1000
+            val oneDayInMillis = 60 * 60 * 1000
             val expiresAt = System.currentTimeMillis() + oneDayInMillis
 
             return JobStepResult.CompleteWith(
