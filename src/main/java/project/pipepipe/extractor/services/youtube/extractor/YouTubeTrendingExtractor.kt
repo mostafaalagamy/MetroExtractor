@@ -25,9 +25,20 @@ class YouTubeTrendingExtractor(
         cookie: String?
     ): JobStepResult {
         val type = getQueryValue(url, "name")
-        val country = getQueryValue(url, "country")!!
+        var country = getQueryValue(url, "country")!!
 
         if (currentState == null) {
+            val supportedCountries = listOf(
+                "DZ", "AR", "AU", "AT", "AZ", "BH", "BD", "BY", "BE", "BO", "BA", "BR", "BG", "CA",
+                "CL", "CO", "CR", "HR", "CY", "CZ", "DK", "DO", "EC", "EG", "SV", "EE", "FI", "FR",
+                "GE", "DE", "GH", "GR", "GT", "HN", "HK", "HU", "IS", "IN", "ID", "IQ", "IE", "IL",
+                "IT", "JM", "JP", "JO", "KZ", "KE", "KW", "LV", "LB", "LY", "LI", "LT", "LU", "MY",
+                "MT", "MX", "ME", "MA", "NP", "NL", "NZ", "NI", "NG", "MK", "NO", "OM", "PK", "PA",
+                "PG", "PY", "PE", "PH", "PL", "PT", "PR", "QA", "RO", "RU", "SA", "SN", "RS", "SG",
+                "SK", "SI", "ZA", "KR", "ES", "LK", "SE", "CH", "TW", "TZ", "TH", "TN", "TR", "UG",
+                "UA", "AE", "GB", "US", "UY", "VE", "VN", "YE", "ZW"
+            )
+            if (!supportedCountries.contains(country)) country = "US"
             return JobStepResult.ContinueWith(
                 listOf(
                     ClientTask(
