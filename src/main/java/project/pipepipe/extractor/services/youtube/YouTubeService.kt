@@ -117,7 +117,8 @@ class YouTubeService(id: Int) : StreamingService(id)  {
                 ExternalUrlType.PLAYLIST to listOf(
                     "youtube\\.com/playlist\\?list="
                 )
-            )
+            ),
+            supportFastFeed = true
         )
 }
 

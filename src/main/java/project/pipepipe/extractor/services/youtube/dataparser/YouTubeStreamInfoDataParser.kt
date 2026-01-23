@@ -1,6 +1,7 @@
 package project.pipepipe.extractor.services.youtube.dataparser
 
 import com.fasterxml.jackson.databind.JsonNode
+import org.jsoup.nodes.Element
 import project.pipepipe.extractor.IgnoreException
 import project.pipepipe.extractor.services.youtube.YouTubeLinks.CHANNEL_URL
 import project.pipepipe.extractor.services.youtube.YouTubeLinks.SHORTS_URL
@@ -12,6 +13,8 @@ import project.pipepipe.shared.infoitem.StreamInfo
 import project.pipepipe.shared.utils.json.requireArray
 import project.pipepipe.shared.utils.json.requireObject
 import project.pipepipe.shared.utils.json.requireString
+import java.time.Instant
+import java.time.OffsetDateTime
 
 object YouTubeStreamInfoDataParser {
     fun parseFromVideoRenderer(data: JsonNode, overrideChannelName: String? = null, overrideChannelId: String? = null): StreamInfo {
@@ -206,6 +209,26 @@ object YouTubeStreamInfoDataParser {
                     ?.requireString("text")
                     ?.let { mixedNumberWordToLong(it) }
             }.getOrNull()
+        )
+    }
+
+    fun parseFromFastFeedEntry(entryElement: Element): StreamInfo {
+        val url = entryElement.getElementsByTag("link").first()?.attr("href")!!
+        val textualUploadDate = entryElement.getElementsByTag("published").first()?.text()!!
+
+        return StreamInfo(
+            url = url,
+            serviceId = 0,
+            name = entryElement.getElementsByTag("title").first()?.text() ?: "",
+            uploaderName = entryElement.select("author > name").first()?.text(),
+            uploaderUrl = entryElement.select("author > uri").first()?.text(),
+            uploaderAvatarUrl = null,
+            thumbnailUrl = entryElement.getElementsByTag("media:thumbnail").first()
+                ?.attr("url")?.replace("hqdefault", "mqdefault"),
+            isShort = url.contains("shorts"),
+            uploadDate = OffsetDateTime.parse(textualUploadDate).toInstant().toEpochMilli(),
+            viewCount = entryElement.getElementsByTag("media:statistics").first()
+                ?.attr("views")?.toLongOrNull()
         )
     }
 

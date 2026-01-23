@@ -1,6 +1,8 @@
 package project.pipepipe.extractor.services.youtube
 
 import project.pipepipe.extractor.Extractor
+import project.pipepipe.extractor.Router.getType
+import project.pipepipe.extractor.Router.resetType
 import project.pipepipe.extractor.services.youtube.YouTubeLinks.COMMENT_RAW_URL
 import project.pipepipe.extractor.services.youtube.YouTubeLinks.PLAYLIST_BASE_URL
 import project.pipepipe.extractor.services.youtube.YouTubeLinks.REPLY_RAW_URL
@@ -14,6 +16,7 @@ import project.pipepipe.extractor.services.youtube.extractor.YouTubeChannelCommo
 import project.pipepipe.extractor.services.youtube.extractor.YouTubeChannelMainTabExtractor
 import project.pipepipe.extractor.services.youtube.extractor.YouTubeChannelPlaylistTabExtractor
 import project.pipepipe.extractor.services.youtube.extractor.YouTubeCommentExtractor
+import project.pipepipe.extractor.services.youtube.extractor.YouTubeFastFeedExtractor
 import project.pipepipe.extractor.services.youtube.extractor.YouTubeMusicSearchExtractor
 import project.pipepipe.extractor.services.youtube.extractor.YouTubePlaylistExtractor
 import project.pipepipe.extractor.services.youtube.extractor.YouTubeSearchExtractor
@@ -26,6 +29,7 @@ object YouTubeUrlRouter {
     fun route(rawUrl: String): Extractor<*,*>? {
         val url = rawUrl.replace("://youtube.com", "://www.youtube.com").replace("://m.youtube.com", "://www.youtube.com")
         return when {
+            url.getType() == "fastfeed" -> YouTubeFastFeedExtractor(url.resetType())
             url.contains(TRENDING_RAW_URL) -> YouTubeTrendingExtractor(url)
             url.contains(PLAYLIST_BASE_URL) -> YouTubePlaylistExtractor(url)
             url.contains(SEARCH_RAW_URL) -> YouTubeSearchExtractor(url)

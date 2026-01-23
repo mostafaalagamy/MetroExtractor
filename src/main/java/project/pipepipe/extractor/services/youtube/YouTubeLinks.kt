@@ -23,4 +23,5 @@ object YouTubeLinks {
     const val PLAYLIST_BASE_URL = "https://www.youtube.com/playlist?list="
     const val BROWSE_URL = "https://www.youtube.com/youtubei/v1/browse?prettyPrint=false"
     const val RESOLVE_CHANNEL_ID_URL = "https://www.youtube.com/youtubei/v1/navigation/resolve_url?prettyPrint=false"
+    const val FAST_FEED_URL = "https://www.youtube.com/feeds/videos.xml?channel_id="
 }
