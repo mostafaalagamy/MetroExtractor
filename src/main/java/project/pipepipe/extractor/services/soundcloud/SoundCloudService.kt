@@ -55,7 +55,7 @@ class SoundCloudService(id: Int) : StreamingService(id) {
     override val serviceInfo: SupportedServiceInfo
         get() = SupportedServiceInfo(
             serviceId = 1,
-            serviceName = "SoundCloud",
+            serviceName = "SoundCloud (Experimental)",
             availableSearchTypes = listOf(
 //                SearchType("all", "search://soundcloud.raw?", sortFilters),
                 SearchType("tracks", "search://soundcloud.raw?type=tracks&query="),
