@@ -26,28 +26,43 @@ object Router {
 
     suspend fun route(request: JobRequest, sessionId: String, currentState: State?): JobStepResult {
         return when(request.jobType) {
-            SupportedJobType.FETCH_INFO -> getExtractor(request.url!!)!!.fetchInfo(
-                sessionId,
-                currentState,
-                request.results,
-                request.cookie
-            )
-            SupportedJobType.FETCH_FIRST_PAGE -> getExtractor(request.url!!)!!.fetchFirstPage(
-                sessionId,
-                currentState,
-                request.results,
-                request.cookie
-            )
-            SupportedJobType.FETCH_GIVEN_PAGE -> getExtractor(request.url!!)!!.fetchGivenPage(
-                request.url!!,
-                sessionId,
-                currentState,
-                request.results,
-                request.cookie
-            )
+            SupportedJobType.FETCH_INFO -> {
+                val extractor = try { getExtractor(request.url!!) } catch (e: Exception) { return JobStepResult.FailWith(ErrorDetail("ROUTE_FAILED", e.stackTraceToString())) }
+                extractor.fetchInfo(
+                    sessionId,
+                    currentState,
+                    request.results,
+                    request.cookie
+                )
+            }
+            SupportedJobType.FETCH_FIRST_PAGE -> {
+                val extractor = try { getExtractor(request.url!!) } catch (e: Exception) { return JobStepResult.FailWith(ErrorDetail("ROUTE_FAILED", e.stackTraceToString())) }
+                extractor.fetchFirstPage(
+                    sessionId,
+                    currentState,
+                    request.results,
+                    request.cookie
+                )
+            }
+            SupportedJobType.FETCH_GIVEN_PAGE -> {
+                val extractor = try { getExtractor(request.url!!) } catch (e: Exception) { return JobStepResult.FailWith(ErrorDetail("ROUTE_FAILED", e.stackTraceToString())) }
+                extractor.fetchGivenPage(
+                    request.url!!,
+                    sessionId,
+                    currentState,
+                    request.results,
+                    request.cookie
+                )
+            }
             SupportedJobType.GET_SUGGESTION -> JobStepResult.CompleteWith(ExtractResult())
-            SupportedJobType.REFRESH_COOKIE -> ExtractorContext.ServiceList.all.first{it.serviceId == request.serviceId!!}.getCookieExtractor()
-                .refreshCookie(sessionId, currentState, request.results)
+            SupportedJobType.REFRESH_COOKIE -> {
+                val extractor = try {
+                    ExtractorContext.ServiceList.all.first { it.serviceId == request.serviceId!! }.getCookieExtractor()
+                } catch (e: Exception) {
+                    return JobStepResult.FailWith(ErrorDetail("ROUTE_FAILED", e.stackTraceToString()))
+                }
+                extractor.refreshCookie(sessionId, currentState, request.results)
+            }
             SupportedJobType.GET_SUPPORTED_SERVICES -> JobStepResult.CompleteWith(
                 ExtractResult(pagedData = PagedData(ExtractorContext.ServiceList.all.map { it.serviceInfo }, null)))
             SupportedJobType.VOTE_SPONSORBLOCK_SEGMENT -> SponsorBlockExtractor(request.url!!).submitSponsorBlockSegmentVote(currentState)
@@ -80,15 +95,7 @@ object Router {
                 currentState = request.state ?: throw IllegalStateException("Session ID provided but no state in request")
             }
 
-            val stepResult = try {
-                route(request, sessionId, currentState)
-            } catch (e: Exception) {
-                return JobResponse(
-                    sessionId = sessionId,
-                    status = JobStatus.FAILED,
-                    result = ExtractResult(fatalError = ErrorDetail("ROUTE_FAILED", e.stackTraceToString()))
-                )
-            }
+            val stepResult = route(request, sessionId, currentState)
 
             when (stepResult) {
                 is JobStepResult.ContinueWith -> {
