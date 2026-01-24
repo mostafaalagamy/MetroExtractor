@@ -16,7 +16,7 @@ plugins {
 }
 
 version = "5.0.0-rc"
-group = "project.pipepipe"
+group = "com.github.mostafaalagamy"
 
 wire {
     java {
@@ -24,7 +24,7 @@ wire {
 }
 
 dependencies {
-    implementation("project.pipepipe:shared:5.0.0-rc")
+    implementation("com.github.mostafaalagamy.MetrolistShared:shared-jvm:eee2b3d")
 
     implementation("org.jsoup:jsoup:1.21.1")
     implementation("com.fasterxml.jackson.core:jackson-core:2.20.0")
@@ -49,5 +49,16 @@ dependencies {
 }
 
 kotlin {
-    jvmToolchain(24)
+    jvmToolchain(17)
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = "com.github.mostafaalagamy"
+            artifactId = "MetroExtractor"
+            version = project.version.toString()
+            from(components["java"])
+        }
+    }
 }
