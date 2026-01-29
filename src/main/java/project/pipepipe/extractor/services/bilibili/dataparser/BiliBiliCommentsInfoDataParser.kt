@@ -4,12 +4,12 @@ import com.fasterxml.jackson.databind.JsonNode
 import org.apache.commons.lang3.StringEscapeUtils
 import project.pipepipe.extractor.services.bilibili.BiliBiliLinks
 import project.pipepipe.shared.infoitem.CommentInfo
-import project.pipepipe.shared.utils.json.requireArray
-import project.pipepipe.shared.utils.json.requireBoolean
-import project.pipepipe.shared.utils.json.requireInt
-import project.pipepipe.shared.utils.json.requireLong
-import project.pipepipe.shared.utils.json.requireObject
-import project.pipepipe.shared.utils.json.requireString
+import project.pipepipe.extractor.utils.json.requireArray
+import project.pipepipe.extractor.utils.json.requireBoolean
+import project.pipepipe.extractor.utils.json.requireInt
+import project.pipepipe.extractor.utils.json.requireLong
+import project.pipepipe.extractor.utils.json.requireObject
+import project.pipepipe.extractor.utils.json.requireString
 
 object BiliBiliCommentsInfoDataParser {
     fun parseFromCommentJson(data: JsonNode): () -> CommentInfo = {

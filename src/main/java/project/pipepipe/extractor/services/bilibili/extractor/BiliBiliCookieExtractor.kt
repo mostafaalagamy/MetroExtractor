@@ -8,9 +8,9 @@ import project.pipepipe.extractor.services.bilibili.Utils.bytesToHex
 import project.pipepipe.shared.state.CookieState
 import project.pipepipe.shared.state.State
 import project.pipepipe.extractor.ExtractorContext.asJson
-import project.pipepipe.shared.utils.json.requireLong
-import project.pipepipe.shared.utils.json.requireObject
-import project.pipepipe.shared.utils.json.requireString
+import project.pipepipe.extractor.utils.json.requireLong
+import project.pipepipe.extractor.utils.json.requireObject
+import project.pipepipe.extractor.utils.json.requireString
 import project.pipepipe.shared.infoitem.CookieInfo
 import project.pipepipe.shared.job.*
 import java.io.IOException

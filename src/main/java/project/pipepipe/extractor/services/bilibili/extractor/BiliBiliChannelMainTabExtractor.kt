@@ -24,11 +24,11 @@ import project.pipepipe.shared.state.PlainState
 import project.pipepipe.shared.state.State
 import project.pipepipe.extractor.ExtractorContext.asJson
 import project.pipepipe.shared.job.ErrorDetail
-import project.pipepipe.shared.utils.json.requireArray
-import project.pipepipe.shared.utils.json.requireInt
-import project.pipepipe.shared.utils.json.requireLong
-import project.pipepipe.shared.utils.json.requireObject
-import project.pipepipe.shared.utils.json.requireString
+import project.pipepipe.extractor.utils.json.requireArray
+import project.pipepipe.extractor.utils.json.requireInt
+import project.pipepipe.extractor.utils.json.requireLong
+import project.pipepipe.extractor.utils.json.requireObject
+import project.pipepipe.extractor.utils.json.requireString
 import kotlin.math.ceil
 
 class BiliBiliChannelMainTabExtractor(url: String) : Extractor<ChannelInfo, StreamInfo>(url) {

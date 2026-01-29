@@ -8,11 +8,11 @@ import project.pipepipe.extractor.services.bilibili.BiliBiliUrlParser
 import project.pipepipe.extractor.services.bilibili.Utils
 import project.pipepipe.extractor.utils.getDurationFromString
 import project.pipepipe.shared.infoitem.StreamInfo
-import project.pipepipe.shared.utils.json.requireArray
-import project.pipepipe.shared.utils.json.requireInt
-import project.pipepipe.shared.utils.json.requireLong
-import project.pipepipe.shared.utils.json.requireObject
-import project.pipepipe.shared.utils.json.requireString
+import project.pipepipe.extractor.utils.json.requireArray
+import project.pipepipe.extractor.utils.json.requireInt
+import project.pipepipe.extractor.utils.json.requireLong
+import project.pipepipe.extractor.utils.json.requireObject
+import project.pipepipe.extractor.utils.json.requireString
 
 object BiliBiliStreamInfoDataParser {
     fun parseFromStreamInfoJson(item: JsonNode): StreamInfo {

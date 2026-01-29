@@ -1,10 +1,10 @@
 package project.pipepipe.extractor.services.soundcloud.dataparser
 
 import com.fasterxml.jackson.databind.JsonNode
-import project.pipepipe.shared.utils.json.requireLong
-import project.pipepipe.shared.utils.json.requireString
-import project.pipepipe.shared.utils.json.requireArray
-import project.pipepipe.shared.utils.json.requireObject
+import project.pipepipe.extractor.utils.json.requireLong
+import project.pipepipe.extractor.utils.json.requireString
+import project.pipepipe.extractor.utils.json.requireArray
+import project.pipepipe.extractor.utils.json.requireObject
 import project.pipepipe.shared.infoitem.PlaylistInfo
 
 object SoundCloudPlaylistInfoDataParser {

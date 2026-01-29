@@ -13,9 +13,9 @@ import project.pipepipe.shared.job.*
 import project.pipepipe.shared.state.PlainState
 import project.pipepipe.shared.state.PreFetchPayloadState
 import project.pipepipe.shared.state.State
-import project.pipepipe.shared.utils.json.requireArray
-import project.pipepipe.shared.utils.json.requireDouble
-import project.pipepipe.shared.utils.json.requireString
+import project.pipepipe.extractor.utils.json.requireArray
+import project.pipepipe.extractor.utils.json.requireDouble
+import project.pipepipe.extractor.utils.json.requireString
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest

@@ -10,9 +10,9 @@ import project.pipepipe.extractor.utils.TimeAgoParser
 import project.pipepipe.extractor.utils.extractDigitsAsLong
 import project.pipepipe.extractor.utils.mixedNumberWordToLong
 import project.pipepipe.shared.infoitem.StreamInfo
-import project.pipepipe.shared.utils.json.requireArray
-import project.pipepipe.shared.utils.json.requireObject
-import project.pipepipe.shared.utils.json.requireString
+import project.pipepipe.extractor.utils.json.requireArray
+import project.pipepipe.extractor.utils.json.requireObject
+import project.pipepipe.extractor.utils.json.requireString
 import java.time.Instant
 import java.time.OffsetDateTime
 

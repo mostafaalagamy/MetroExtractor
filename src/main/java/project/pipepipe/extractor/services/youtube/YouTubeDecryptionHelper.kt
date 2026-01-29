@@ -7,10 +7,10 @@ import project.pipepipe.extractor.ExtractorContext
 import project.pipepipe.extractor.ExtractorContext.asJson
 import project.pipepipe.extractor.services.youtube.YouTubeRequestHelper.parseQueryToMap
 import project.pipepipe.extractor.utils.RequestHelper
-import project.pipepipe.shared.utils.json.requireArray
-import project.pipepipe.shared.utils.json.requireInt
-import project.pipepipe.shared.utils.json.requireObject
-import project.pipepipe.shared.utils.json.requireString
+import project.pipepipe.extractor.utils.json.requireArray
+import project.pipepipe.extractor.utils.json.requireInt
+import project.pipepipe.extractor.utils.json.requireObject
+import project.pipepipe.extractor.utils.json.requireString
 import java.net.URLEncoder
 import kotlin.collections.component1
 import kotlin.collections.component2

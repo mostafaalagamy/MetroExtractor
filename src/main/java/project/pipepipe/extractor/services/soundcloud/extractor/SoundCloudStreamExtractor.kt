@@ -17,9 +17,9 @@ import project.pipepipe.shared.job.RequestMethod
 import project.pipepipe.shared.job.isDefaultTask
 import project.pipepipe.shared.state.PlainState
 import project.pipepipe.shared.state.StreamExtractState
-import project.pipepipe.shared.utils.json.requireLong
-import project.pipepipe.shared.utils.json.requireObject
-import project.pipepipe.shared.utils.json.requireString
+import project.pipepipe.extractor.utils.json.requireLong
+import project.pipepipe.extractor.utils.json.requireObject
+import project.pipepipe.extractor.utils.json.requireString
 import java.net.URLEncoder
 import kotlin.text.ifEmpty
 

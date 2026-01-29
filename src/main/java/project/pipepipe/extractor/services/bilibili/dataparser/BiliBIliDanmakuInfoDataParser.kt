@@ -4,9 +4,9 @@ import com.fasterxml.jackson.databind.JsonNode
 import org.jsoup.nodes.Element
 import project.pipepipe.extractor.ExtractorContext
 import project.pipepipe.shared.infoitem.DanmakuInfo
-import project.pipepipe.shared.utils.json.requireArray
-import project.pipepipe.shared.utils.json.requireInt
-import project.pipepipe.shared.utils.json.requireString
+import project.pipepipe.extractor.utils.json.requireArray
+import project.pipepipe.extractor.utils.json.requireInt
+import project.pipepipe.extractor.utils.json.requireString
 import kotlin.time.Duration.Companion.ZERO
 import kotlin.time.Duration.Companion.milliseconds
 

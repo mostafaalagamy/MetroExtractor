@@ -12,7 +12,7 @@ import project.pipepipe.shared.job.*
 import project.pipepipe.shared.state.PlainState
 import project.pipepipe.shared.state.State
 import project.pipepipe.shared.state.StreamExtractState
-import project.pipepipe.shared.utils.json.*
+import project.pipepipe.extractor.utils.json.*
 
 class BiliBiliLiveStreamExtractor(
     url: String,

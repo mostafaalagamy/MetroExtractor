@@ -7,7 +7,7 @@ import project.pipepipe.extractor.services.bilibili.BilibiliService
 import project.pipepipe.extractor.services.bilibili.dataparser.BiliBiliStreamInfoDataParser
 import project.pipepipe.shared.state.State
 import project.pipepipe.extractor.ExtractorContext.asJson
-import project.pipepipe.shared.utils.json.requireArray
+import project.pipepipe.extractor.utils.json.requireArray
 import project.pipepipe.shared.infoitem.Info
 import project.pipepipe.shared.infoitem.RelatedItemInfo
 import project.pipepipe.shared.infoitem.StreamInfo

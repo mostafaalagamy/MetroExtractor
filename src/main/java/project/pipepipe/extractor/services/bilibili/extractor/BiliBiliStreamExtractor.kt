@@ -21,7 +21,7 @@ import project.pipepipe.shared.infoitem.helper.stream.VideoStream
 import project.pipepipe.shared.job.*
 import project.pipepipe.shared.state.State
 import project.pipepipe.shared.state.StreamExtractState
-import project.pipepipe.shared.utils.json.*
+import project.pipepipe.extractor.utils.json.*
 
 class BiliBiliStreamExtractor(
     url: String,

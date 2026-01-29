@@ -7,9 +7,9 @@ import project.pipepipe.extractor.services.youtube.YouTubeLinks.REPLY_RAW_URL
 import project.pipepipe.extractor.utils.TimeAgoParser
 import project.pipepipe.extractor.utils.parseNumberWithSuffix
 import project.pipepipe.shared.infoitem.CommentInfo
-import project.pipepipe.shared.utils.json.requireBoolean
-import project.pipepipe.shared.utils.json.requireObject
-import project.pipepipe.shared.utils.json.requireString
+import project.pipepipe.extractor.utils.json.requireBoolean
+import project.pipepipe.extractor.utils.json.requireObject
+import project.pipepipe.extractor.utils.json.requireString
 
 object YouTubeCommentInfoDataParser {
     fun parseFromCommentData(data: JsonNode, commentViewModel: JsonNode? = null): CommentInfo {

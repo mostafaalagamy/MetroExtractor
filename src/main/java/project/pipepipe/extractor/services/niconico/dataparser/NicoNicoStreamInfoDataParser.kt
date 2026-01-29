@@ -9,10 +9,10 @@ import project.pipepipe.extractor.services.niconico.NicoNicoLinks.WATCH_URL
 import project.pipepipe.extractor.services.niconico.NicoNicoService
 import project.pipepipe.extractor.utils.getDurationFromString
 import project.pipepipe.shared.infoitem.StreamInfo
-import project.pipepipe.shared.utils.json.requireBoolean
-import project.pipepipe.shared.utils.json.requireLong
-import project.pipepipe.shared.utils.json.requireObject
-import project.pipepipe.shared.utils.json.requireString
+import project.pipepipe.extractor.utils.json.requireBoolean
+import project.pipepipe.extractor.utils.json.requireLong
+import project.pipepipe.extractor.utils.json.requireObject
+import project.pipepipe.extractor.utils.json.requireString
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter

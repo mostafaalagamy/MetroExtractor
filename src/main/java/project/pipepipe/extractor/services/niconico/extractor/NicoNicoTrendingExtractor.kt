@@ -11,8 +11,8 @@ import project.pipepipe.shared.infoitem.StreamInfo
 import project.pipepipe.shared.job.*
 import project.pipepipe.shared.state.PlainState
 import project.pipepipe.shared.state.State
-import project.pipepipe.shared.utils.json.requireArray
-import project.pipepipe.shared.utils.json.requireObject
+import project.pipepipe.extractor.utils.json.requireArray
+import project.pipepipe.extractor.utils.json.requireObject
 
 class NicoNicoTrendingExtractor(url: String) : Extractor<Nothing, StreamInfo>(url) {
     override suspend fun fetchInfo(
