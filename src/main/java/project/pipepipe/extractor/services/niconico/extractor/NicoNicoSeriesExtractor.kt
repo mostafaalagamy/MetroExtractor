@@ -9,7 +9,7 @@ import project.pipepipe.shared.infoitem.StreamInfo
 import project.pipepipe.shared.job.*
 import project.pipepipe.shared.state.PlainState
 import project.pipepipe.shared.state.State
-import project.pipepipe.shared.utils.json.requireArray
+import project.pipepipe.extractor.utils.json.requireArray
 
 class NicoNicoSeriesExtractor(url: String) : Extractor<PlaylistInfo, StreamInfo>(url) {
 

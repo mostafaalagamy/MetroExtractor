@@ -10,7 +10,7 @@ import project.pipepipe.shared.infoitem.DanmakuInfo
 import project.pipepipe.shared.job.*
 import project.pipepipe.shared.state.PlainState
 import project.pipepipe.shared.state.State
-import project.pipepipe.shared.utils.json.requireArray
+import project.pipepipe.extractor.utils.json.requireArray
 import java.net.URLDecoder
 
 class NicoNicoDanmakuExtractor(url: String): Extractor<Nothing, DanmakuInfo>(url) {

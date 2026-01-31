@@ -34,7 +34,7 @@ import project.pipepipe.shared.state.CachedExtractState
 import project.pipepipe.shared.state.PlainState
 import project.pipepipe.shared.state.PreFetchPayloadState
 import project.pipepipe.shared.state.State
-import project.pipepipe.shared.utils.json.*
+import project.pipepipe.extractor.utils.json.*
 import java.time.OffsetDateTime
 import kotlin.math.ceil
 

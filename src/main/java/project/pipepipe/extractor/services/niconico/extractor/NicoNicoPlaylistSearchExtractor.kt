@@ -8,8 +8,8 @@ import project.pipepipe.extractor.utils.incrementUrlParam
 import project.pipepipe.shared.job.*
 import project.pipepipe.shared.state.PlainState
 import project.pipepipe.shared.state.State
-import project.pipepipe.shared.utils.json.requireArray
-import project.pipepipe.shared.utils.json.requireBoolean
+import project.pipepipe.extractor.utils.json.requireArray
+import project.pipepipe.extractor.utils.json.requireBoolean
 
 class NicoNicoPlaylistSearchExtractor(url: String): SearchExtractor(url) {
     override suspend fun fetchFirstPage(

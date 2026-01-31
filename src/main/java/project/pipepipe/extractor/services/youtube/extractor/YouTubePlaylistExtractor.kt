@@ -24,8 +24,8 @@ import project.pipepipe.shared.state.State
 import project.pipepipe.extractor.ExtractorContext.asJson
 import project.pipepipe.extractor.Router.setType
 import project.pipepipe.extractor.services.youtube.YouTubeLinks.CHANNEL_URL
-import project.pipepipe.shared.utils.json.requireArray
-import project.pipepipe.shared.utils.json.requireString
+import project.pipepipe.extractor.utils.json.requireArray
+import project.pipepipe.extractor.utils.json.requireString
 
 class YouTubePlaylistExtractor(
     url: String,

@@ -15,8 +15,8 @@ import project.pipepipe.shared.job.RequestMethod
 import project.pipepipe.shared.job.TaskResult
 import project.pipepipe.shared.state.PlainState
 import project.pipepipe.shared.state.State
-import project.pipepipe.shared.utils.json.requireArray
-import project.pipepipe.shared.utils.json.requireObject
+import project.pipepipe.extractor.utils.json.requireArray
+import project.pipepipe.extractor.utils.json.requireObject
 
 class NicoNicoChannelLiveTabExtractor(url: String) : Extractor<Nothing, StreamInfo>(url) {
     override suspend fun fetchFirstPage(

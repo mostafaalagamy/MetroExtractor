@@ -5,10 +5,10 @@ import project.pipepipe.extractor.services.niconico.NicoNicoLinks.SERIES_URL
 import project.pipepipe.extractor.services.niconico.NicoNicoLinks.USER_URL
 import project.pipepipe.extractor.services.niconico.NicoNicoLinks.getUserMylistUrl
 import project.pipepipe.shared.infoitem.PlaylistInfo
-import project.pipepipe.shared.utils.json.requireInt
-import project.pipepipe.shared.utils.json.requireLong
-import project.pipepipe.shared.utils.json.requireObject
-import project.pipepipe.shared.utils.json.requireString
+import project.pipepipe.extractor.utils.json.requireInt
+import project.pipepipe.extractor.utils.json.requireLong
+import project.pipepipe.extractor.utils.json.requireObject
+import project.pipepipe.extractor.utils.json.requireString
 
 object NicoNicoPlaylistInfoDataParser {
     fun parseFromMylistJson(item: JsonNode) = PlaylistInfo(

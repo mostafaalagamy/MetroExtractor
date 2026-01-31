@@ -7,7 +7,7 @@ import project.pipepipe.extractor.services.niconico.NicoNicoService.Companion.GO
 import project.pipepipe.extractor.services.niconico.dataparser.NicoNicoStreamInfoDataParser.parseFromStreamCommonJson
 import project.pipepipe.shared.state.State
 import project.pipepipe.extractor.utils.incrementUrlParam
-import project.pipepipe.shared.utils.json.requireArray
+import project.pipepipe.extractor.utils.json.requireArray
 import project.pipepipe.shared.job.ClientTask
 import project.pipepipe.shared.job.ExtractResult
 import project.pipepipe.shared.job.JobStepResult

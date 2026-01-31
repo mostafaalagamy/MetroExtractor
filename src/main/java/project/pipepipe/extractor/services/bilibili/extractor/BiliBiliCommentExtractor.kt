@@ -14,11 +14,11 @@ import project.pipepipe.shared.job.*
 import project.pipepipe.shared.state.PlainState
 import project.pipepipe.extractor.ExtractorContext.asJson
 import project.pipepipe.extractor.utils.incrementUrlParam
-import project.pipepipe.shared.utils.json.requireArray
-import project.pipepipe.shared.utils.json.requireBoolean
-import project.pipepipe.shared.utils.json.requireInt
-import project.pipepipe.shared.utils.json.requireObject
-import project.pipepipe.shared.utils.json.requireString
+import project.pipepipe.extractor.utils.json.requireArray
+import project.pipepipe.extractor.utils.json.requireBoolean
+import project.pipepipe.extractor.utils.json.requireInt
+import project.pipepipe.extractor.utils.json.requireObject
+import project.pipepipe.extractor.utils.json.requireString
 import kotlin.math.ceil
 
 class BiliBiliCommentExtractor(url: String) : Extractor<Nothing, CommentInfo>(url) {

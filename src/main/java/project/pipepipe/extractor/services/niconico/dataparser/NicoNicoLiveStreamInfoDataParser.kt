@@ -3,9 +3,9 @@ package project.pipepipe.extractor.services.niconico.dataparser
 import com.fasterxml.jackson.databind.JsonNode
 import project.pipepipe.extractor.services.niconico.NicoNicoLinks.WATCH_URL
 import project.pipepipe.shared.infoitem.StreamInfo
-import project.pipepipe.shared.utils.json.requireLong
-import project.pipepipe.shared.utils.json.requireObject
-import project.pipepipe.shared.utils.json.requireString
+import project.pipepipe.extractor.utils.json.requireLong
+import project.pipepipe.extractor.utils.json.requireObject
+import project.pipepipe.extractor.utils.json.requireString
 
 object NicoNicoLiveStreamInfoDataParser {
     fun parseFromLiveHistoryJson(item: JsonNode) = StreamInfo(

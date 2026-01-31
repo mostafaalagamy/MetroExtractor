@@ -21,9 +21,9 @@ import project.pipepipe.extractor.utils.RequestHelper.replaceQueryValue
 import project.pipepipe.shared.state.PlainState
 import project.pipepipe.shared.state.State
 import project.pipepipe.extractor.ExtractorContext.asJson
-import project.pipepipe.shared.utils.json.requireArray
-import project.pipepipe.shared.utils.json.requireObject
-import project.pipepipe.shared.utils.json.requireString
+import project.pipepipe.extractor.utils.json.requireArray
+import project.pipepipe.extractor.utils.json.requireObject
+import project.pipepipe.extractor.utils.json.requireString
 import java.net.URLDecoder
 import java.net.URLEncoder
 

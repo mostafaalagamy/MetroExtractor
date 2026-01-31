@@ -5,12 +5,12 @@ import project.pipepipe.shared.state.State
 import project.pipepipe.extractor.ExtractorContext.asJson
 import project.pipepipe.extractor.services.niconico.NicoNicoService.Companion.GOOGLE_HEADER
 import project.pipepipe.extractor.services.niconico.dataparser.NicoNicoStreamInfoDataParser
-import project.pipepipe.shared.utils.json.requireArray
+import project.pipepipe.extractor.utils.json.requireArray
 import project.pipepipe.shared.infoitem.Info
 import project.pipepipe.shared.infoitem.RelatedItemInfo
 import project.pipepipe.shared.job.*
 import project.pipepipe.shared.state.PlainState
-import project.pipepipe.shared.utils.json.requireObject
+import project.pipepipe.extractor.utils.json.requireObject
 
 class NicoNicoRelatedVideoExtractor(
     url: String

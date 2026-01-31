@@ -1,12 +1,12 @@
 package project.pipepipe.extractor.services.soundcloud.dataparser
 
 import com.fasterxml.jackson.databind.JsonNode
-import project.pipepipe.shared.utils.json.requireInt
-import project.pipepipe.shared.utils.json.requireLong
-import project.pipepipe.shared.utils.json.requireObject
-import project.pipepipe.shared.utils.json.requireString
+import project.pipepipe.extractor.utils.json.requireInt
+import project.pipepipe.extractor.utils.json.requireLong
+import project.pipepipe.extractor.utils.json.requireObject
+import project.pipepipe.extractor.utils.json.requireString
 import project.pipepipe.shared.infoitem.CommentInfo
-import project.pipepipe.shared.utils.json.requireBoolean
+import project.pipepipe.extractor.utils.json.requireBoolean
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 

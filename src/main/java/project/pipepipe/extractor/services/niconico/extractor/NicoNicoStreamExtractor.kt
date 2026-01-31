@@ -17,17 +17,17 @@ import project.pipepipe.extractor.ExtractorContext.isLoggedInCookie
 import project.pipepipe.extractor.services.niconico.NicoNicoLinks.DANMAKU_RAW_URL
 import project.pipepipe.extractor.services.niconico.NicoNicoLinks.RELATED_VIDEO_URL
 import project.pipepipe.extractor.services.niconico.NicoNicoLinks.USER_URL
-import project.pipepipe.shared.utils.json.requireArray
-import project.pipepipe.shared.utils.json.requireBoolean
-import project.pipepipe.shared.utils.json.requireLong
-import project.pipepipe.shared.utils.json.requireString
+import project.pipepipe.extractor.utils.json.requireArray
+import project.pipepipe.extractor.utils.json.requireBoolean
+import project.pipepipe.extractor.utils.json.requireLong
+import project.pipepipe.extractor.utils.json.requireString
 import project.pipepipe.shared.infoitem.StreamInfo
 import project.pipepipe.shared.infoitem.helper.stream.Description
 import project.pipepipe.shared.job.*
 import project.pipepipe.shared.state.PlainState
 import java.time.ZonedDateTime
 import project.pipepipe.shared.job.ErrorDetail
-import project.pipepipe.shared.utils.json.requireObject
+import project.pipepipe.extractor.utils.json.requireObject
 import java.net.URLEncoder
 
 

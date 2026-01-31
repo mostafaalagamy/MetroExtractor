@@ -6,8 +6,8 @@ import project.pipepipe.extractor.services.youtube.YouTubeLinks.CHANNEL_URL
 import project.pipepipe.extractor.services.youtube.YouTubeLinks.PLAYLIST_BASE_URL
 import project.pipepipe.extractor.utils.extractDigitsAsLong
 import project.pipepipe.shared.infoitem.PlaylistInfo
-import project.pipepipe.shared.utils.json.requireArray
-import project.pipepipe.shared.utils.json.requireString
+import project.pipepipe.extractor.utils.json.requireArray
+import project.pipepipe.extractor.utils.json.requireString
 
 object YouTubePlaylistInfoDataParser {
     fun parseFromLockupMetadataViewModel(data: JsonNode, overrideName: String? = null): PlaylistInfo {

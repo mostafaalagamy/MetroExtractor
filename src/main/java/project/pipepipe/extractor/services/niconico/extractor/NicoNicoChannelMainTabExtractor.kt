@@ -17,8 +17,8 @@ import project.pipepipe.shared.infoitem.StreamInfo
 import project.pipepipe.shared.job.*
 import project.pipepipe.shared.state.PlainState
 import project.pipepipe.shared.state.State
-import project.pipepipe.shared.utils.json.requireLong
-import project.pipepipe.shared.utils.json.requireString
+import project.pipepipe.extractor.utils.json.requireLong
+import project.pipepipe.extractor.utils.json.requireString
 import java.net.URLDecoder
 import java.net.URLEncoder
 

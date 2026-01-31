@@ -13,7 +13,7 @@ import project.pipepipe.shared.infoitem.StreamInfo
 import project.pipepipe.shared.job.*
 import project.pipepipe.shared.state.PlainState
 import project.pipepipe.shared.state.State
-import project.pipepipe.shared.utils.json.*
+import project.pipepipe.extractor.utils.json.*
 import java.net.URLDecoder
 
 class BiliBiliPlaylistExtractor(url: String) : Extractor<PlaylistInfo, StreamInfo>(url) {

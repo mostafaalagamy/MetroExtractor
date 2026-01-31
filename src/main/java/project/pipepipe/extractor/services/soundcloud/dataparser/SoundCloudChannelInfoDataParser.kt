@@ -1,9 +1,9 @@
 package project.pipepipe.extractor.services.soundcloud.dataparser
 
 import com.fasterxml.jackson.databind.JsonNode
-import project.pipepipe.shared.utils.json.requireLong
-import project.pipepipe.shared.utils.json.requireString
-import project.pipepipe.shared.utils.json.requireBoolean
+import project.pipepipe.extractor.utils.json.requireLong
+import project.pipepipe.extractor.utils.json.requireString
+import project.pipepipe.extractor.utils.json.requireBoolean
 import project.pipepipe.shared.infoitem.ChannelInfo
 
 object SoundCloudChannelInfoDataParser {

@@ -14,8 +14,8 @@ import project.pipepipe.extractor.services.youtube.YouTubeLinks.SEARCH_MUSIC_URL
 import project.pipepipe.extractor.services.youtube.dataparser.YouTubeChannelInfoDataParser
 import project.pipepipe.extractor.services.youtube.dataparser.YouTubePlaylistInfoDataParser
 import project.pipepipe.extractor.utils.RequestHelper.getQueryValue
-import project.pipepipe.shared.utils.json.requireArray
-import project.pipepipe.shared.utils.json.requireString
+import project.pipepipe.extractor.utils.json.requireArray
+import project.pipepipe.extractor.utils.json.requireString
 import project.pipepipe.shared.job.ClientTask
 import project.pipepipe.shared.job.ExtractResult
 import project.pipepipe.shared.job.JobStepResult
@@ -25,7 +25,7 @@ import project.pipepipe.shared.job.RequestMethod
 import project.pipepipe.shared.job.TaskResult
 import project.pipepipe.shared.job.isDefaultTask
 import project.pipepipe.shared.state.PlainState
-import project.pipepipe.shared.utils.json.requireObject
+import project.pipepipe.extractor.utils.json.requireObject
 
 
 class YouTubeSearchExtractor(url: String): SearchExtractor(url) {

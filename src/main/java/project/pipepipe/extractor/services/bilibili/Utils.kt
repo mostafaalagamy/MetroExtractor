@@ -9,10 +9,10 @@ import org.cache2k.Cache
 import org.cache2k.Cache2kBuilder
 import project.pipepipe.extractor.ExtractorContext
 import project.pipepipe.shared.downloader.Downloader
-import project.pipepipe.shared.utils.json.requireArray
-import project.pipepipe.shared.utils.json.requireDouble
-import project.pipepipe.shared.utils.json.requireLong
-import project.pipepipe.shared.utils.json.requireString
+import project.pipepipe.extractor.utils.json.requireArray
+import project.pipepipe.extractor.utils.json.requireDouble
+import project.pipepipe.extractor.utils.json.requireLong
+import project.pipepipe.extractor.utils.json.requireString
 import java.io.*
 import java.math.BigInteger
 import java.net.URLEncoder
